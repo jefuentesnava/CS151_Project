@@ -1,6 +1,3 @@
-package ProjectStarterCode;
-
-import java.util.LinkedList;
 import ProjectStarterCode.controller.Controller;
 import ProjectStarterCode.controller.Message;
 import ProjectStarterCode.model.Model;
@@ -8,6 +5,8 @@ import ProjectStarterCode.view.View;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import java.util.LinkedList;
 
 public class Snake {
     private static BlockingQueue<Message> queue = new LinkedBlockingQueue<>();
