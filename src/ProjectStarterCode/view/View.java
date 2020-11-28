@@ -4,11 +4,9 @@ import ProjectStarterCode.controller.Message;
 import ProjectStarterCode.controller.NewGameMessage;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Flow;
 
 public class View {
     private JFrame menuFrame;
@@ -31,7 +29,7 @@ public class View {
 
         MenuView();
         GameView();
-        //DeathView();
+        DeathView();
     }
 
     public void MenuView(){
@@ -62,8 +60,9 @@ public class View {
         //playButton and playButtonPanel properties
         playButton.setForeground(Color.GREEN);
         playButton.setBackground(Color.BLACK);
-        playButton.setFont(playButton.getFont().deriveFont(75.0f));
+        playButton.setFont(playButton.getFont().deriveFont(70.0f));
         playButtonPanel.setBackground(Color.BLACK);
+        playButton.setBorder(new LineBorder(Color.WHITE, 5));
         playButtonPanel.add(playButton);
 
         //gameDesc and gameDecsPanel properties
@@ -158,13 +157,87 @@ public class View {
     public void DeathView(){
         deathFrame = new JFrame("Snake Death");
         deathFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        deathFrame.getContentPane().setBackground(Color.BLACK);
 
-        deathFrame.setPreferredSize(new Dimension(1000,10000));
+        //set up frame layout
+        deathFrame.setLayout(new BorderLayout());
+
+        //panels to contain components
+        JPanel top = new JPanel();
+        JPanel interior = new JPanel();
+        JPanel left = new JPanel();
+        JPanel right = new JPanel();
+        JPanel bot = new JPanel();
+
+        //components
+        JLabel deathMes = new JLabel(" Unfortunately, Slither has died.");
+        JButton playAgainButton = new JButton(" Play Again ");
+        JButton menuButton = new JButton(" Menu ");
+
+        //set up interiorPanel
+        interior.setLayout(new GridLayout(1,2,200,0));
+        interior.setBackground(Color.BLACK);
+
+        //center JLabel
+        top.setLayout(new GridBagLayout());
+
+        //deathMes and top panel properties
+        deathMes.setForeground(Color.WHITE);
+        deathMes.setFont(deathMes.getFont().deriveFont(20.0f));
+        top.setBackground(Color.BLACK);
+        top.add(deathMes);
+
+        //playAgainButton and interior panel properties
+        playAgainButton.setBackground(Color.BLACK);
+        playAgainButton.setForeground(Color.GREEN);
+        playAgainButton.setBorder(new LineBorder(Color.WHITE, 5));
+        playAgainButton.setFont(playAgainButton.getFont().deriveFont(35.0f));
+        interior.add(playAgainButton);
+
+        //menuButton properties
+        menuButton.setBackground(Color.BLACK);
+        menuButton.setForeground(Color.GREEN);
+        menuButton.setBorder(new LineBorder(Color.WHITE, 5));
+        menuButton.setFont(menuButton.getFont().deriveFont(35.0f));
+        interior.add(menuButton);
+
+        //remaining panel properties
+        bot.setBackground(Color.BLACK);
+        right.setBackground(Color.BLACK);
+        left.setBackground(Color.BLACK);
+
+
+        //add everything to frame
+        deathFrame.add(top, BorderLayout.NORTH);
+        top.setPreferredSize(new Dimension(1000,200));
+        deathFrame.add(interior, BorderLayout.CENTER);
+        interior.setPreferredSize(new Dimension(800,100));
+        deathFrame.add(left, BorderLayout.WEST);
+        left.setPreferredSize(new Dimension(100,100));
+        deathFrame.add(right, BorderLayout.EAST);
+        right.setPreferredSize(new Dimension(100, 100));
+        deathFrame.add(bot , BorderLayout.SOUTH);
+        bot.setPreferredSize(new Dimension(1000, 200));
+        deathFrame.pack();
         deathFrame.setVisible(true);
 
+        //actions listeners
+        playAgainButton.addActionListener(event -> {
+            try {
+                this.queue.put(new NewGameMessage()); // <--- adding NewGame message to the queue
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        menuButton.addActionListener(event -> {
+            try {
+                this.queue.put(new NewGameMessage()); // <--- adding NewGame message to the queue
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
     }
-
-
 
     public void change() {
         // TODO: do all the updates and repaint
@@ -184,4 +257,6 @@ public class View {
  * https://docs.oracle.com/javase/7/docs/api/java/awt/BorderLayout.html
  *
  *https://stackoverflow.com/questions/36159929/printing-a-2d-array-of-jlabels-to-a-gridlayout
+ *
+ * https://stackoverflow.com/questions/9829319/centering-a-jlabel-in-a-jpanel
  */
