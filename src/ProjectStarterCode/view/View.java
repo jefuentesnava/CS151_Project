@@ -12,6 +12,7 @@ public class View {
     private JFrame menuFrame;
     private JFrame gameFrame;
     private JFrame deathFrame;
+    private JFrame winFrame;
     private BlockingQueue<Message> queue;
 
     public static View init(BlockingQueue<Message> queue) {
@@ -27,11 +28,15 @@ public class View {
         // JFrame can be in a separate class or created JFrame with all the elements in this class
         // or you can make View a subclass of JFrame by extending it
 
-        MenuView();
-        GameView();
-        DeathView();
+//        MenuView();
+//        GameView();
+//        DeathView();
+        WinView();
     }
 
+    /*
+        Menu View where users can start a game, learns about the game objective, and the win condition
+     */
     public void MenuView(){
         menuFrame = new JFrame("Snake Menu");
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,6 +101,9 @@ public class View {
         });
     }
 
+    /*
+        Game view where the snake will be animated and food will be generated
+     */
     public void GameView(){
         int row = 9;
         int col = 9;
@@ -154,6 +162,9 @@ public class View {
         gameFrame.setVisible(true);
     }
 
+    /*
+        Death View when user loses and can decide to play again or return to menu
+     */
     public void DeathView(){
         deathFrame = new JFrame("Snake Death");
         deathFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -220,6 +231,94 @@ public class View {
         bot.setPreferredSize(new Dimension(1000, 200));
         deathFrame.pack();
         deathFrame.setVisible(true);
+
+        //actions listeners
+        playAgainButton.addActionListener(event -> {
+            try {
+                this.queue.put(new NewGameMessage()); // <--- adding NewGame message to the queue
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        menuButton.addActionListener(event -> {
+            try {
+                this.queue.put(new NewGameMessage()); // <--- adding NewGame message to the queue
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    /*
+        Win View when user wins and can decide to play again or return to menu
+     */
+    public void WinView(){
+        winFrame = new JFrame("Snake Win");
+        winFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        winFrame.getContentPane().setBackground(Color.BLACK);
+
+        //set up frame layout
+        winFrame.setLayout(new BorderLayout());
+
+        //panels to contain components
+        JPanel top = new JPanel();
+        JPanel interior = new JPanel();
+        JPanel left = new JPanel();
+        JPanel right = new JPanel();
+        JPanel bot = new JPanel();
+
+        //components
+        JLabel winMes = new JLabel(" Congratulations, you fed Slither a lot! ");
+        JButton playAgainButton = new JButton(" Play Again ");
+        JButton menuButton = new JButton(" Menu ");
+
+        //set up interiorPanel
+        interior.setLayout(new GridLayout(1,2,200,0));
+        interior.setBackground(Color.BLACK);
+
+        //center JLabel
+        top.setLayout(new GridBagLayout());
+
+        //winMes and top panel properties
+        winMes.setForeground(Color.WHITE);
+        winMes.setFont(winMes.getFont().deriveFont(20.0f));
+        top.setBackground(Color.BLACK);
+        top.add(winMes);
+
+        //playAgainButton and interior panel properties
+        playAgainButton.setBackground(Color.BLACK);
+        playAgainButton.setForeground(Color.GREEN);
+        playAgainButton.setBorder(new LineBorder(Color.WHITE, 5));
+        playAgainButton.setFont(playAgainButton.getFont().deriveFont(35.0f));
+        interior.add(playAgainButton);
+
+        //menuButton properties
+        menuButton.setBackground(Color.BLACK);
+        menuButton.setForeground(Color.GREEN);
+        menuButton.setBorder(new LineBorder(Color.WHITE, 5));
+        menuButton.setFont(menuButton.getFont().deriveFont(35.0f));
+        interior.add(menuButton);
+
+        //remaining panel properties
+        bot.setBackground(Color.BLACK);
+        right.setBackground(Color.BLACK);
+        left.setBackground(Color.BLACK);
+
+
+        //add everything to frame
+        winFrame.add(top, BorderLayout.NORTH);
+        top.setPreferredSize(new Dimension(1000,200));
+        winFrame.add(interior, BorderLayout.CENTER);
+        interior.setPreferredSize(new Dimension(800,100));
+        winFrame.add(left, BorderLayout.WEST);
+        left.setPreferredSize(new Dimension(100,100));
+        winFrame.add(right, BorderLayout.EAST);
+        right.setPreferredSize(new Dimension(100, 100));
+        winFrame.add(bot , BorderLayout.SOUTH);
+        bot.setPreferredSize(new Dimension(1000, 200));
+        winFrame.pack();
+        winFrame.setVisible(true);
 
         //actions listeners
         playAgainButton.addActionListener(event -> {
