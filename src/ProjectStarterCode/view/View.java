@@ -5,8 +5,10 @@ import ProjectStarterCode.controller.NewGameMessage;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Flow;
 
 public class View {
     private JFrame menuFrame;
@@ -28,6 +30,8 @@ public class View {
         // or you can make View a subclass of JFrame by extending it
 
         MenuView();
+        GameView();
+        //DeathView();
     }
 
     public void MenuView(){
@@ -40,7 +44,7 @@ public class View {
         JPanel gameDescPanel = new JPanel();
         JPanel winConPanel = new JPanel();
 
-        //componenets
+        //components
         JLabel logo = new JLabel("Snake");
         JButton playButton = new JButton("Play");
         JLabel gameDesc = new JLabel("Eat Food to Grow in Size");
@@ -49,28 +53,32 @@ public class View {
         //set up layout
         menuFrame.setLayout(new GridLayout(4,1));
 
-
+        //logo and logoPanel properties
         logo.setForeground(Color.GREEN);
         logo.setFont(logo.getFont().deriveFont(100.0f));
         logoPanel.setBackground(Color.BLACK);
         logoPanel.add(logo);
 
+        //playButton and playButtonPanel properties
         playButton.setForeground(Color.GREEN);
         playButton.setBackground(Color.BLACK);
         playButton.setFont(playButton.getFont().deriveFont(75.0f));
         playButtonPanel.setBackground(Color.BLACK);
         playButtonPanel.add(playButton);
 
+        //gameDesc and gameDecsPanel properties
         gameDesc.setForeground(Color.WHITE);
         gameDesc.setFont(gameDesc.getFont().deriveFont(20.0f));;
         gameDescPanel.setBackground(Color.BLACK);
         gameDescPanel.add(gameDesc);
 
+        //winCon and winConPanel properties
         winCon.setForeground(Color.WHITE);
         winCon.setFont(gameDesc.getFont().deriveFont(20.0f));
         winConPanel.setBackground(Color.BLACK);
         winConPanel.add(winCon);
 
+        //add everything to frame
         menuFrame.add(logoPanel);
         menuFrame.add(playButtonPanel);
         menuFrame.add(gameDescPanel);
@@ -90,14 +98,69 @@ public class View {
     }
 
     public void GameView(){
-        JLabel snakeLen = new JLabel();
-        JPanel gamePanel  = new JPanel();
-        gamePanel.setLayout(new GridBagLayout());
-        GridBagConstraints con = new GridBagConstraints();
+        int row = 9;
+        int col = 9;
 
+        gameFrame = new JFrame("Snake Game");
+        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameFrame.getContentPane().setBackground(Color.BLACK);
+
+        //setup layout
+        gameFrame.setLayout(new BorderLayout());
+
+        //panels to contain components
+        JPanel snakeLenPanel = new JPanel();
+        JPanel fieldPanel = new JPanel();
+        JPanel left = new JPanel();
+        JPanel right = new JPanel();
+        JPanel bot = new JPanel();
+        JLabel snakeLen = new JLabel(" Snake Length: ");
+
+        //fieldPanel properties and setup
+        fieldPanel.setLayout(new GridLayout(row,col,3,3));
+        fieldPanel.setBackground(Color.WHITE);
+
+        JLabel[][] grid = new JLabel[row][col];
+        for(int i = 0 ; i < row; i++){
+            for (int j = 0; j < col; j++){
+                grid[i][j] = new JLabel();
+                grid[i][j].setBackground(Color.GRAY);
+                grid[i][j].setOpaque(true);
+                fieldPanel.add(grid[i][j]);
+            }
+        }
+
+        //snakeLen and snakeLenPanel properties
+        snakeLen.setForeground(Color.WHITE);
+        snakeLen.setFont(snakeLen.getFont().deriveFont(20.0f));
+        snakeLenPanel.add(snakeLen);
+        snakeLenPanel.setBackground(Color.BLACK);
+
+        //remaining panel properties
+       bot.setBackground(Color.BLACK);
+       right.setBackground(Color.BLACK);
+       left.setBackground(Color.BLACK);
+
+       //add everything to frame
+        gameFrame.add(snakeLenPanel, BorderLayout.NORTH);
+        snakeLenPanel.setPreferredSize(new Dimension(1000,50));
+        gameFrame.add(fieldPanel, BorderLayout.CENTER);
+        gameFrame.add(bot, BorderLayout.SOUTH);
+        bot.setPreferredSize(new Dimension(1000,50));
+        gameFrame.add(right, BorderLayout.EAST);
+        right.setPreferredSize(new Dimension(50,1000));
+        gameFrame.add(left, BorderLayout.WEST);
+        left.setPreferredSize(new Dimension(50,1000));
+        gameFrame.pack();
+        gameFrame.setVisible(true);
     }
 
     public void DeathView(){
+        deathFrame = new JFrame("Snake Death");
+        deathFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        deathFrame.setPreferredSize(new Dimension(1000,10000));
+        deathFrame.setVisible(true);
 
     }
 
@@ -118,5 +181,7 @@ public class View {
 /***
  * https://docs.oracle.com/javase/tutorial/uiswing/layout/grid.html
  *
+ * https://docs.oracle.com/javase/7/docs/api/java/awt/BorderLayout.html
  *
+ *https://stackoverflow.com/questions/36159929/printing-a-2d-array-of-jlabels-to-a-gridlayout
  */
