@@ -116,9 +116,7 @@ public class View {
 
 //resources used
 /***
- * https://stackoverflow.com/questions/1843180/how-to-adjust-jframe-border-thickness-in-java
- *
- * https://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html
+ * https://docs.oracle.com/javase/tutorial/uiswing/layout/grid.html
  *
  *
  */
