@@ -28,9 +28,9 @@ public class View {
         // JFrame can be in a separate class or created JFrame with all the elements in this class
         // or you can make View a subclass of JFrame by extending it
 
-//        MenuView();
-//        GameView();
-//        DeathView();
+        MenuView();
+        GameView();
+        DeathView();
         WinView();
     }
 
