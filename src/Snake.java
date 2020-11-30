@@ -26,10 +26,8 @@ public class Snake {
     public static void main(String[] args) {
         Board board = new Board();
         Snake snake = new Snake(board);
-        board.printBoard();
         Food food = new Food(board);
         food.spawnFood();
-        System.out.println();
         board.printBoard();
     }
 
