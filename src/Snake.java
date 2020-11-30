@@ -1,15 +1,5 @@
-import ProjectStarterCode.controller.Message;
-import ProjectStarterCode.model.Model;
-import ProjectStarterCode.view.View;
-
-import java.util.LinkedList;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class Snake {
-    private static BlockingQueue<Message> queue = new LinkedBlockingQueue<>();
-    private static View view;
-    private static Model model;
 
     private boolean alive;
     private int size;
