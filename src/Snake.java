@@ -14,20 +14,6 @@ public class Snake {
         RIGHT
     }
 
-    public static void main(String[] args) {
-        Board board = new Board();
-        Snake snake = new Snake(board);
-        Food food = new Food(board);
-        Collision collision = new Collision(board, snake);
-        board.printBoard();
-        for (int i = 0; i < 3; i++) {
-            collision.snakeCollision();
-            snake.printSnake();
-            board.printBoard();
-        }
-
-    }
-
     public Snake(Board board) {
         alive = true;
         size = 3;
