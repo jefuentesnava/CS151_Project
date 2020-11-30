@@ -21,8 +21,8 @@ public class Game {
 	
 	public static void main(String[] args) {
 
+	view = View.init(queue);	
 	model = new Model();
-        view = View.init(queue);
         Controller game = new Controller(view, model, queue);
 		
 	game.mainLoop();
