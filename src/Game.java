@@ -1,3 +1,7 @@
+
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
 public class Game {
 
     private BlockingQueue<Message> queue;
@@ -12,7 +16,8 @@ public class Game {
 	
 	public static void main(String[] args) {
 
-	//Menu etc.
-
+	model = new Model();
+        view = View.init(queue);
+        Controller game = new Controller(view, model, queue);
 	}
 }
