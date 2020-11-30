@@ -9,11 +9,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class Game {
 
-    private BlockingQueue<Message> queue;
-    private View view; // Direct reference to view
-    private Model model; // Direct reference to model
+    private static BlockingQueue<Message> queue;
+    private static View view; // Direct reference to view
+    private static Model model; // Direct reference to model
 	
-	public Controller(View view, Model model, BlockingQueue<Message> queue) {
+	public Game(View view, Model model, BlockingQueue<Message> queue) {
         this.view = view;
         this.model = model;
         this.queue = queue;
@@ -21,8 +21,9 @@ public class Game {
 	
 	public static void main(String[] args) {
 
-	model = new Model();
+	   model = new Model();
         view = View.init(queue);
         Controller game = new Controller(view, model, queue);
 	}
+
 }
