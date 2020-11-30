@@ -25,6 +25,10 @@ public class Game {
         view = View.init(queue);
         Controller game = new Controller(view, model, queue);
 		
+	game.mainLoop();
+        view.dispose();
+        queue.clear();
+		
        Board board = new Board();
        Snake snake = new Snake(board);
        Food food = new Food(board);
