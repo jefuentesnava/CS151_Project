@@ -21,9 +21,20 @@ public class Game {
 	
 	public static void main(String[] args) {
 
-	   model = new Model();
+	model = new Model();
         view = View.init(queue);
         Controller game = new Controller(view, model, queue);
-	}
+		
+       Board board = new Board();
+       Snake snake = new Snake(board);
+       Food food = new Food(board);
+       Collision collision = new Collision(board, snake);
+       board.printBoard();
+       for (int i = 0; i < 3; i++) {
+           collision.snakeCollision();
+           snake.printSnake();
+           board.printBoard();
+	   } 	
+    }
 
 }
