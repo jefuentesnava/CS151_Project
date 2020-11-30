@@ -1,12 +1,12 @@
 public class Tile {
 
     private String containing;
-    private int x, y;
+    private int row, col;
 
-    public Tile(int x, int y) {
+    public Tile(int row, int col) {
         containing = "nothing";
-        this.x = x;
-        this.y = y;
+        this.row = row;
+        this.col = col;
     }
 
     public String getInsideTile() {
@@ -17,8 +17,16 @@ public class Tile {
         containing = setting;
     }
 
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
     @Override
     public String toString() {
-        return containing + "(" + x + ", " + y + ")";
+        return containing + "(" + row + ", " + col + ")";
     }
 }

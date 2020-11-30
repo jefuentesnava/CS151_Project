@@ -27,8 +27,14 @@ public class Snake {
         Board board = new Board();
         Snake snake = new Snake(board);
         Food food = new Food(board);
-        food.spawnFood();
+        Collision collision = new Collision(board, snake);
         board.printBoard();
+        for (int i = 0; i < 3; i++) {
+            collision.snakeCollision();
+            snake.printSnake();
+            board.printBoard();
+        }
+
     }
 
     public Snake(Board board) {
@@ -59,5 +65,12 @@ public class Snake {
 
     private boolean checkWinCondition() {
         return size > 40;
+    }
+
+    public void printSnake() {
+        for (Tile snakePiece : location) {
+            System.out.print(snakePiece);
+        }
+        System.out.println();
     }
 }
