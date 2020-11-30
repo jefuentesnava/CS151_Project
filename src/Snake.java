@@ -1,12 +1,10 @@
-import ProjectStarterCode.controller.Controller;
 import ProjectStarterCode.controller.Message;
 import ProjectStarterCode.model.Model;
 import ProjectStarterCode.view.View;
 
+import java.util.LinkedList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-
-import java.util.LinkedList;
 
 public class Snake {
     private static BlockingQueue<Message> queue = new LinkedBlockingQueue<>();
@@ -15,28 +13,37 @@ public class Snake {
 
     private boolean alive;
     private int size;
-    //public direction, what are we using to keep track of direction?
+    public Direction direction;
     public LinkedList<Tile> location;
 
-    public static void main(String[] args) {
-        view = View.init(queue);
-        model = new Model();
-        Controller controller = new Controller(view, model, queue);
-
-        controller.mainLoop();
-        view.dispose();
-        queue.clear();
+    enum Direction {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
     }
 
-    public Snake() {
+    public static void main(String[] args) {
+        Board board = new Board();
+        Snake snake = new Snake(board);
+        board.printBoard();
+        Food food = new Food(board);
+        food.spawnFood();
+        System.out.println();
+        board.printBoard();
+    }
+
+    public Snake(Board board) {
         alive = true;
-        size = 3; //need to double check starting length
-        //direction =
+        size = 3;
+        direction = Direction.DOWN;
         location = new LinkedList<Tile>();
-        //need to add initial location of tiles
-        //head
-        //body
-        //tail?
+        location.add(board.tiles[4][4]);
+        board.tiles[4][4].setInsideTile("snake");
+        location.add(board.tiles[3][4]);
+        board.tiles[3][4].setInsideTile("snake");
+        location.add(board.tiles[2][4]);
+        board.tiles[2][4].setInsideTile("snake");
     }
 
     public boolean toggleAlive() {
@@ -53,7 +60,6 @@ public class Snake {
     }
 
     private boolean checkWinCondition() {
-        //0 should be replaced with 1/2 of board size
-        return size > 0;
+        return size > 40;
     }
 }

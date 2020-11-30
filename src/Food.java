@@ -1,10 +1,11 @@
 public class Food {
 
-    //public Tile location;
+    public Tile location;
     public Board board;
 
     public Food(Board board) {
         this.board = board;
+        this.location = null;
     }
 
     public void spawnFood() {
@@ -12,9 +13,12 @@ public class Food {
         if (!foodIsOnBoard()) {
             int x = (int) (Math.random() * board.tiles.length);
             int y = (int) (Math.random() * board.tiles.length);
-            if (board.tiles[x][y].getInsideTile().compareTo("nothing") == 0) {
-                board.tiles[x][y].setInsideTile("food");
+            while (board.tiles[x][y].getInsideTile().compareTo("nothing") != 0) {
+                x = (int) (Math.random() * board.tiles.length);
+                y = (int) (Math.random() * board.tiles.length);
             }
+            board.tiles[x][y].setInsideTile("food");
+            location = board.tiles[x][y];
         }
     }
 
@@ -28,5 +32,10 @@ public class Food {
             }
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return location.toString();
     }
 }
