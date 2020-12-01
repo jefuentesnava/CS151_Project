@@ -16,7 +16,6 @@ public class Snake {
 
     public Snake(Board board) {
         alive = true;
-        size = 3;
         direction = Direction.DOWN;
         location = new LinkedList<Tile>();
         location.add(board.tiles[4][4]);
@@ -25,6 +24,7 @@ public class Snake {
         board.tiles[3][4].setInsideTile("snake");
         location.add(board.tiles[2][4]);
         board.tiles[2][4].setInsideTile("snake");
+        size = location.size();
     }
 
     public boolean toggleAlive() {
@@ -32,15 +32,15 @@ public class Snake {
         return alive;
     }
 
+    public boolean isAlive() {
+        return alive;
+    }
+
     public int getSize() {
         return size;
     }
 
-    public void setSize(int newSize) {
-        size = newSize;
-    }
-
-    private boolean checkWinCondition() {
+    public boolean checkWinCondition() {
         return size > 40;
     }
 
@@ -48,6 +48,34 @@ public class Snake {
         for (Tile snakePiece : location) {
             System.out.print(snakePiece);
         }
-        System.out.println();
+        System.out.println(getSize());
+    }
+
+    public void updateSize() {
+        size = location.size();
+    }
+
+    public void goLeft() {
+        if (!direction.equals(Direction.RIGHT)) {
+            direction = Direction.LEFT;
+        }
+    }
+
+    public void goRight() {
+        if (!direction.equals(Direction.LEFT)) {
+            direction = Direction.RIGHT;
+        }
+    }
+
+    public void goUp() {
+        if (!direction.equals(Direction.DOWN)) {
+            direction = Direction.UP;
+        }
+    }
+
+    public void goDown() {
+        if (!direction.equals(Direction.UP)) {
+            direction = Direction.DOWN;
+        }
     }
 }

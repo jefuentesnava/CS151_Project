@@ -27,6 +27,6 @@ public class Tile {
 
     @Override
     public String toString() {
-        return containing + "(" + row + ", " + col + ")";
+        return containing + " (" + row + ", " + col + ") ";
     }
 }

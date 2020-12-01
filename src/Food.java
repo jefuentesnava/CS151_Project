@@ -8,6 +8,12 @@ public class Food {
         this.location = null;
     }
 
+    public Food(Board board, int x, int y) {
+        this.board = board;
+        this.location = board.tiles[x][y];
+        board.tiles[x][y].setInsideTile("food");
+    }
+
     public void spawnFood() {
         //needs to look at board and choose unoccupied tile
         if (!foodIsOnBoard()) {
