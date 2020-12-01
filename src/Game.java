@@ -5,6 +5,11 @@ import ProjectStarterCode.view.View;
 import java.util.concurrent.BlockingQueue;
 
 public class Game {
+     /**
+     * Builds a game, with a Board where the user controls a snake (up, down, left, right),
+     * which has the objective of consuming food until it exceeds the size of
+     * 40 tiles.
+     */
 
     private static BlockingQueue<Message> queue;
     private static View view; // Direct reference to view
