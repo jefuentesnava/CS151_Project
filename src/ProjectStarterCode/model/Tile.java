@@ -1,3 +1,5 @@
+package ProjectStarterCode.model;
+
 public class Tile {
 
     private String containing;

@@ -37,13 +37,13 @@ public class View {
     /*
         Menu View where users can start a game, learns about the game objective, and the win condition
      */
-    public void MenuView(){
+    public void MenuView() {
         menuFrame = new JFrame("Snake Menu");
         menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //panels to contain components
         JPanel logoPanel = new JPanel();
-        JPanel playButtonPanel  = new JPanel();
+        JPanel playButtonPanel = new JPanel();
         JPanel gameDescPanel = new JPanel();
         JPanel winConPanel = new JPanel();
 
@@ -54,7 +54,7 @@ public class View {
         JLabel winCon = new JLabel("*** Win condition: When Snake's length reaches half the size of the board size ***");
 
         //set up layout
-        menuFrame.setLayout(new GridLayout(4,1));
+        menuFrame.setLayout(new GridLayout(4, 1));
 
         //logo and logoPanel properties
         logo.setForeground(Color.GREEN);
@@ -72,7 +72,7 @@ public class View {
 
         //gameDesc and gameDecsPanel properties
         gameDesc.setForeground(Color.WHITE);
-        gameDesc.setFont(gameDesc.getFont().deriveFont(20.0f));;
+        gameDesc.setFont(gameDesc.getFont().deriveFont(20.0f));
         gameDescPanel.setBackground(Color.BLACK);
         gameDescPanel.add(gameDesc);
 
@@ -104,7 +104,7 @@ public class View {
     /*
         Game view where the snake will be animated and food will be generated
      */
-    public void GameView(){
+    public void GameView() {
         int row = 9;
         int col = 9;
 
@@ -124,12 +124,12 @@ public class View {
         JLabel snakeLen = new JLabel(" Snake Length: ");
 
         //fieldPanel properties and setup
-        fieldPanel.setLayout(new GridLayout(row,col,3,3));
+        fieldPanel.setLayout(new GridLayout(row, col, 3, 3));
         fieldPanel.setBackground(Color.WHITE);
 
         JLabel[][] grid = new JLabel[row][col];
-        for(int i = 0 ; i < row; i++){
-            for (int j = 0; j < col; j++){
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
                 grid[i][j] = new JLabel();
                 grid[i][j].setBackground(Color.GRAY);
                 grid[i][j].setOpaque(true);
@@ -144,20 +144,20 @@ public class View {
         snakeLenPanel.setBackground(Color.BLACK);
 
         //remaining panel properties
-       bot.setBackground(Color.BLACK);
-       right.setBackground(Color.BLACK);
-       left.setBackground(Color.BLACK);
+        bot.setBackground(Color.BLACK);
+        right.setBackground(Color.BLACK);
+        left.setBackground(Color.BLACK);
 
-       //add everything to frame
+        //add everything to frame
         gameFrame.add(snakeLenPanel, BorderLayout.NORTH);
-        snakeLenPanel.setPreferredSize(new Dimension(1000,50));
+        snakeLenPanel.setPreferredSize(new Dimension(1000, 50));
         gameFrame.add(fieldPanel, BorderLayout.CENTER);
         gameFrame.add(bot, BorderLayout.SOUTH);
-        bot.setPreferredSize(new Dimension(1000,50));
+        bot.setPreferredSize(new Dimension(1000, 50));
         gameFrame.add(right, BorderLayout.EAST);
-        right.setPreferredSize(new Dimension(50,1000));
+        right.setPreferredSize(new Dimension(50, 1000));
         gameFrame.add(left, BorderLayout.WEST);
-        left.setPreferredSize(new Dimension(50,1000));
+        left.setPreferredSize(new Dimension(50, 1000));
         gameFrame.pack();
         gameFrame.setVisible(true);
     }
@@ -165,7 +165,7 @@ public class View {
     /*
         Death View when user loses and can decide to play again or return to menu
      */
-    public void DeathView(){
+    public void DeathView() {
         deathFrame = new JFrame("Snake Death");
         deathFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         deathFrame.getContentPane().setBackground(Color.BLACK);
@@ -186,7 +186,7 @@ public class View {
         JButton menuButton = new JButton(" Menu ");
 
         //set up interiorPanel
-        interior.setLayout(new GridLayout(1,2,200,0));
+        interior.setLayout(new GridLayout(1, 2, 200, 0));
         interior.setBackground(Color.BLACK);
 
         //center JLabel
@@ -220,14 +220,14 @@ public class View {
 
         //add everything to frame
         deathFrame.add(top, BorderLayout.NORTH);
-        top.setPreferredSize(new Dimension(1000,200));
+        top.setPreferredSize(new Dimension(1000, 200));
         deathFrame.add(interior, BorderLayout.CENTER);
-        interior.setPreferredSize(new Dimension(800,100));
+        interior.setPreferredSize(new Dimension(800, 100));
         deathFrame.add(left, BorderLayout.WEST);
-        left.setPreferredSize(new Dimension(100,100));
+        left.setPreferredSize(new Dimension(100, 100));
         deathFrame.add(right, BorderLayout.EAST);
         right.setPreferredSize(new Dimension(100, 100));
-        deathFrame.add(bot , BorderLayout.SOUTH);
+        deathFrame.add(bot, BorderLayout.SOUTH);
         bot.setPreferredSize(new Dimension(1000, 200));
         deathFrame.pack();
         deathFrame.setVisible(true);
@@ -253,7 +253,7 @@ public class View {
     /*
         Win View when user wins and can decide to play again or return to menu
      */
-    public void WinView(){
+    public void WinView() {
         winFrame = new JFrame("Snake Win");
         winFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         winFrame.getContentPane().setBackground(Color.BLACK);
@@ -274,7 +274,7 @@ public class View {
         JButton menuButton = new JButton(" Menu ");
 
         //set up interiorPanel
-        interior.setLayout(new GridLayout(1,2,200,0));
+        interior.setLayout(new GridLayout(1, 2, 200, 0));
         interior.setBackground(Color.BLACK);
 
         //center JLabel
@@ -308,14 +308,14 @@ public class View {
 
         //add everything to frame
         winFrame.add(top, BorderLayout.NORTH);
-        top.setPreferredSize(new Dimension(1000,200));
+        top.setPreferredSize(new Dimension(1000, 200));
         winFrame.add(interior, BorderLayout.CENTER);
-        interior.setPreferredSize(new Dimension(800,100));
+        interior.setPreferredSize(new Dimension(800, 100));
         winFrame.add(left, BorderLayout.WEST);
-        left.setPreferredSize(new Dimension(100,100));
+        left.setPreferredSize(new Dimension(100, 100));
         winFrame.add(right, BorderLayout.EAST);
         right.setPreferredSize(new Dimension(100, 100));
-        winFrame.add(bot , BorderLayout.SOUTH);
+        winFrame.add(bot, BorderLayout.SOUTH);
         bot.setPreferredSize(new Dimension(1000, 200));
         winFrame.pack();
         winFrame.setVisible(true);

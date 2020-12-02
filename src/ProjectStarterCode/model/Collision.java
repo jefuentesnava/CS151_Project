@@ -1,3 +1,5 @@
+package ProjectStarterCode.model;
+
 public class Collision {
     public Snake snake;
     public Board board;

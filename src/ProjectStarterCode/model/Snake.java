@@ -1,3 +1,5 @@
+package ProjectStarterCode.model;
+
 import java.util.LinkedList;
 
 public class Snake {
