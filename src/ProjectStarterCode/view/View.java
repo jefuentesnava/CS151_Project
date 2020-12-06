@@ -41,7 +41,13 @@ public class View {
     public void TestView(){
         mainFrame = new JFrame("Snake");
 
-        JPanel panelcontent = new JPanel();
+        int row = 9;
+        int col = 9;
+
+        /*
+            JPanels, JButtons, JTextFields, ...
+         */
+        JPanel panelContent = new JPanel();
         JPanel menuPanel = new JPanel();
         JPanel gamePanel = new JPanel();
         JPanel deathPanel = new JPanel();
@@ -49,9 +55,59 @@ public class View {
         JButton playButton = new JButton("Play");
         JButton playAgainButton = new JButton("Play Again");
         JButton menuButton = new JButton("Menu");
-        CardLayout cl =  new CardLayout();
 
-        panelcontent.setLayout(cl);
+        //Game Components
+        JPanel snakeLenPanel = new JPanel();
+        JPanel fieldPanel = new JPanel();
+        JPanel left = new JPanel();
+        JPanel right = new JPanel();
+        JPanel bot = new JPanel();
+        JLabel snakeLen = new JLabel(" Snake Length: ");
+
+        /*
+            layouts
+         */
+        CardLayout cl =  new CardLayout();
+        panelContent.setLayout(cl);
+        gamePanel.setLayout(new BorderLayout());
+
+        //Game layouts
+        fieldPanel.setLayout(new GridLayout(row, col, 3, 3));  //create a gridlayout 9x9 with vertical and horizontal gaps of 3
+        fieldPanel.setBackground(Color.WHITE);  //set color of background to white to increase contrast
+
+        //Game Panel logic
+        JLabel[][] grid = new JLabel[row][col];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                grid[i][j] = new JLabel();
+                grid[i][j].setBackground(Color.GRAY);
+                grid[i][j].setOpaque(true);
+                fieldPanel.add(grid[i][j]);
+            }
+        }
+
+        snakeLen.setForeground(Color.WHITE);
+        snakeLen.setFont(snakeLen.getFont().deriveFont(20.0f));
+        snakeLenPanel.add(snakeLen);
+        snakeLenPanel.setBackground(Color.BLACK);
+
+        bot.setBackground(Color.BLACK);
+        right.setBackground(Color.BLACK);
+        left.setBackground(Color.BLACK);
+
+        //add everything to gamePanel
+        gamePanel.add(snakeLenPanel, BorderLayout.NORTH);
+        snakeLenPanel.setPreferredSize(new Dimension(1000, 50));
+        gamePanel.add(fieldPanel, BorderLayout.CENTER);
+        gamePanel.add(bot, BorderLayout.SOUTH);
+        bot.setPreferredSize(new Dimension(1000, 50));
+        gamePanel.add(right, BorderLayout.EAST);
+        right.setPreferredSize(new Dimension(50, 1000));
+        gamePanel.add(left, BorderLayout.WEST);
+        left.setPreferredSize(new Dimension(50, 1000));
+        gamePanel.setVisible(true);
+
+
 
         menuPanel.add(playButton);
         deathPanel.add(playAgainButton);
@@ -64,64 +120,36 @@ public class View {
         deathPanel.setBackground(Color.BLACK);
         winPanel.setBackground(Color.BLACK);
 
-        panelcontent.add(menuPanel, "1");
-        panelcontent.add(gamePanel, "2");
-        panelcontent.add(deathPanel, "3");
-        panelcontent.add(winPanel, "4");
+        panelContent.add(menuPanel, "1");
+        panelContent.add(gamePanel, "2");
+        panelContent.add(deathPanel, "3");
+        panelContent.add(winPanel, "4");
 
-        cl.show(panelcontent, "3");
+        cl.show(panelContent, "1");
 
         //action listeners
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cl.show(panelcontent, "2");
+                cl.show(panelContent, "2");
             }
         });
 
         playAgainButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cl.show(panelcontent, "2");
+                cl.show(panelContent, "2");
             }
         });
 
         menuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cl.show(panelcontent, "1");
+                cl.show(panelContent, "1");
             }
         });
 
-
-//        playButton.addActionListener(event -> {
-//            try {
-//                this.queue.put(new NewGameMessage()); // <--- adding NewGame message to the queue
-//                cl.show(panelcontent, "2");
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        });
-//
-//        playAgainButton.addActionListener(event -> {
-//            try {
-//                this.queue.put(new NewGameMessage()); // <--- adding NewGame message to the queue
-//                cl.show(panelcontent, "2");
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        });
-//
-//        menuButton.addActionListener(event -> {
-//            try {
-//                this.queue.put(new NewGameMessage()); // <--- adding NewGame message to the queue
-//                cl.show(panelcontent, "1");
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        });
-
-        mainFrame.add(panelcontent);
+        mainFrame.add(panelContent);
         mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainFrame.pack();
         mainFrame.setVisible(true);
@@ -195,66 +223,8 @@ public class View {
         });
     }
 
-    /*
-        Game view where the snake will be animated and food will be generated
-     */
-    public void GameView() {
-        int row = 9;
-        int col = 9;
 
-        gameFrame = new JFrame("Snake Game");
-        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gameFrame.getContentPane().setBackground(Color.BLACK);
 
-        //setup layout
-        gameFrame.setLayout(new BorderLayout());
-
-        //panels to contain components
-        JPanel snakeLenPanel = new JPanel();
-        JPanel fieldPanel = new JPanel();
-        JPanel left = new JPanel();
-        JPanel right = new JPanel();
-        JPanel bot = new JPanel();
-        JLabel snakeLen = new JLabel(" Snake Length: ");
-
-        //fieldPanel properties and setup
-        fieldPanel.setLayout(new GridLayout(row, col, 3, 3));
-        fieldPanel.setBackground(Color.WHITE);
-
-        JLabel[][] grid = new JLabel[row][col];
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                grid[i][j] = new JLabel();
-                grid[i][j].setBackground(Color.GRAY);
-                grid[i][j].setOpaque(true);
-                fieldPanel.add(grid[i][j]);
-            }
-        }
-
-        //snakeLen and snakeLenPanel properties
-        snakeLen.setForeground(Color.WHITE);
-        snakeLen.setFont(snakeLen.getFont().deriveFont(20.0f));
-        snakeLenPanel.add(snakeLen);
-        snakeLenPanel.setBackground(Color.BLACK);
-
-        //remaining panel properties
-        bot.setBackground(Color.BLACK);
-        right.setBackground(Color.BLACK);
-        left.setBackground(Color.BLACK);
-
-        //add everything to frame
-        gameFrame.add(snakeLenPanel, BorderLayout.NORTH);
-        snakeLenPanel.setPreferredSize(new Dimension(1000, 50));
-        gameFrame.add(fieldPanel, BorderLayout.CENTER);
-        gameFrame.add(bot, BorderLayout.SOUTH);
-        bot.setPreferredSize(new Dimension(1000, 50));
-        gameFrame.add(right, BorderLayout.EAST);
-        right.setPreferredSize(new Dimension(50, 1000));
-        gameFrame.add(left, BorderLayout.WEST);
-        left.setPreferredSize(new Dimension(50, 1000));
-        gameFrame.pack();
-        gameFrame.setVisible(true);
-    }
 
     /*
         Death View when user loses and can decide to play again or return to menu
