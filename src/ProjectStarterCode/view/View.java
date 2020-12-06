@@ -6,9 +6,12 @@ import ProjectStarterCode.controller.NewGameMessage;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.concurrent.BlockingQueue;
 
 public class View {
+    private JFrame mainFrame;
     private JFrame menuFrame;
     private JFrame gameFrame;
     private JFrame deathFrame;
@@ -28,11 +31,102 @@ public class View {
         // JFrame can be in a separate class or created JFrame with all the elements in this class
         // or you can make View a subclass of JFrame by extending it
 
-        MenuView();
-        GameView();
-        DeathView();
-        WinView();
+//        MenuView();
+//        GameView();
+//        DeathView();
+//        WinView();
+        TestView();
     }
+
+    public void TestView(){
+        mainFrame = new JFrame("Snake");
+
+        JPanel panelcontent = new JPanel();
+        JPanel menuPanel = new JPanel();
+        JPanel gamePanel = new JPanel();
+        JPanel deathPanel = new JPanel();
+        JPanel winPanel = new JPanel();
+        JButton playButton = new JButton("Play");
+        JButton playAgainButton = new JButton("Play Again");
+        JButton menuButton = new JButton("Menu");
+        CardLayout cl =  new CardLayout();
+
+        panelcontent.setLayout(cl);
+
+        menuPanel.add(playButton);
+        deathPanel.add(playAgainButton);
+        deathPanel.add(menuButton);
+        winPanel.add(playAgainButton);
+        winPanel.add(menuButton);
+
+        menuPanel.setBackground(Color.BLACK);
+        gamePanel.setBackground(Color.BLACK);
+        deathPanel.setBackground(Color.BLACK);
+        winPanel.setBackground(Color.BLACK);
+
+        panelcontent.add(menuPanel, "1");
+        panelcontent.add(gamePanel, "2");
+        panelcontent.add(deathPanel, "3");
+        panelcontent.add(winPanel, "4");
+
+        cl.show(panelcontent, "3");
+
+        //action listeners
+        playButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cl.show(panelcontent, "2");
+            }
+        });
+
+        playAgainButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cl.show(panelcontent, "2");
+            }
+        });
+
+        menuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cl.show(panelcontent, "1");
+            }
+        });
+
+
+//        playButton.addActionListener(event -> {
+//            try {
+//                this.queue.put(new NewGameMessage()); // <--- adding NewGame message to the queue
+//                cl.show(panelcontent, "2");
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        });
+//
+//        playAgainButton.addActionListener(event -> {
+//            try {
+//                this.queue.put(new NewGameMessage()); // <--- adding NewGame message to the queue
+//                cl.show(panelcontent, "2");
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        });
+//
+//        menuButton.addActionListener(event -> {
+//            try {
+//                this.queue.put(new NewGameMessage()); // <--- adding NewGame message to the queue
+//                cl.show(panelcontent, "1");
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        });
+
+        mainFrame.add(panelcontent);
+        mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        mainFrame.pack();
+        mainFrame.setVisible(true);
+    }
+
 
     /*
         Menu View where users can start a game, learns about the game objective, and the win condition
