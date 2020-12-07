@@ -12,9 +12,6 @@ import java.util.concurrent.BlockingQueue;
 
 public class View {
     private JFrame mainFrame;
-    private JFrame menuFrame;
-    private JFrame gameFrame;
-    private JFrame deathFrame;
     private JFrame winFrame;
     private BlockingQueue<Message> queue;
 
@@ -31,22 +28,23 @@ public class View {
         // JFrame can be in a separate class or created JFrame with all the elements in this class
         // or you can make View a subclass of JFrame by extending it
 
-//        MenuView();
-//        GameView();
-//        DeathView();
+
 //        WinView();
-        TestView();
+        GameViews();
     }
 
-    public void TestView(){
+    public void GameViews(){
         mainFrame = new JFrame("Snake");
 
         int row = 9;
         int col = 9;
 
-        /*********************************************************************************************
+        /*
+        ----------------------------------------------------------------------------------------------------------------------------------------------------------------
             JPanels, JButtons, JTextFields, ...
-         ********************************************************************************************/
+         ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+         */
+
         JPanel panelContent = new JPanel();     //Parent Panel
         JPanel menuPanel = new JPanel();        //Child Panel
         JPanel gamePanel = new JPanel();        //Child Panel
@@ -75,35 +73,53 @@ public class View {
         JPanel bot = new JPanel();
         JLabel snakeLen = new JLabel(" Snake Length: ");
 
-
-        /*********************************************************************************************
+        //Death Components
+        JPanel top = new JPanel();
+        JPanel interior = new JPanel();
+        JPanel dleft = new JPanel();
+        JPanel dright = new JPanel();
+        JPanel dbot = new JPanel();
+        JLabel deathMes = new JLabel(" Unfortunately, Slither has died.");
+        /*
+        ----------------------------------------------------------------------------------------------------------------------------------------------------------------
             layouts
-         ********************************************************************************************/
+         ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+         */
+
         CardLayout cl =  new CardLayout();
         panelContent.setLayout(cl);
 
-        /**Menu Layouts**/
+        /*Menu Layouts**/
         menuPanel.setLayout(new GridLayout(4, 1));
 
-        /**Game layouts**/
+        /*Game layouts**/
         gamePanel.setLayout(new BorderLayout());
         fieldPanel.setLayout(new GridLayout(row, col, 3, 3));  //create a gridlayout 9x9 with vertical and horizontal gaps of 3
         fieldPanel.setBackground(Color.WHITE);  //set color of background to white to increase contrast
 
-        /*********************************************************************************************
-         Panel Logic
-         ********************************************************************************************/
-        /**Menu Panel Logic**/
+        /*Death Layout**/
+        deathPanel.setLayout(new BorderLayout());
+        interior.setLayout(new GridLayout(1, 2, 200, 0));
+        top.setLayout(new GridBagLayout());
+
+
+         /*
+        ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+            Panel Logic
+         ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+         */
+
+        /*Menu Panel Logic**/
             //logo and logoPanel properties
         logo.setForeground(Color.GREEN);
-        logo.setFont(logo.getFont().deriveFont(100.0f));
+        logo.setFont(logo.getFont().deriveFont(200.0f));
         logoPanel.setBackground(Color.BLACK);
         logoPanel.add(logo);
 
             //playButton and playButtonPanel properties
         playButton.setForeground(Color.GREEN);
         playButton.setBackground(Color.BLACK);
-        playButton.setFont(playButton.getFont().deriveFont(70.0f));
+        playButton.setFont(playButton.getFont().deriveFont(140.0f));
         playButtonPanel.setBackground(Color.BLACK);
         playButton.setBorder(new LineBorder(Color.WHITE, 5));
         playButtonPanel.add(playButton);
@@ -125,9 +141,9 @@ public class View {
         menuPanel.add(playButtonPanel);
         menuPanel.add(gameDescPanel);
         menuPanel.add(winConPanel);
-        
 
-        /**Game Panel logic**/
+
+        /*Game Panel logic**/
         JLabel[][] grid = new JLabel[row][col];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
@@ -138,11 +154,13 @@ public class View {
             }
         }
 
+        //snakeLen properties
         snakeLen.setForeground(Color.WHITE);
         snakeLen.setFont(snakeLen.getFont().deriveFont(20.0f));
         snakeLenPanel.add(snakeLen);
         snakeLenPanel.setBackground(Color.BLACK);
 
+        //remaining panel properties
         bot.setBackground(Color.BLACK);
         right.setBackground(Color.BLACK);
         left.setBackground(Color.BLACK);
@@ -159,14 +177,56 @@ public class View {
         left.setPreferredSize(new Dimension(50, 1000));
         gamePanel.setVisible(true);
 
-        /*********************************************************************************************
-         * Remaining Initialization
-         *********************************************************************************************/
+        /* Death and Win condition Shared Logic*****************/
+            //playAgainButton properties
+        playAgainButton.setBackground(Color.BLACK);
+        playAgainButton.setForeground(Color.GREEN);
+        playAgainButton.setBorder(new LineBorder(Color.WHITE, 5));
+        playAgainButton.setFont(playAgainButton.getFont().deriveFont(35.0f));
+
+            //menuButton properties
+        menuButton.setBackground(Color.BLACK);
+        menuButton.setForeground(Color.GREEN);
+        menuButton.setBorder(new LineBorder(Color.WHITE, 5));
+        menuButton.setFont(menuButton.getFont().deriveFont(35.0f));
+
+
+        /*Death Panel Logic********/
+            //deathMes and top panel properties
+        deathMes.setForeground(Color.WHITE);
+        deathMes.setFont(deathMes.getFont().deriveFont(20.0f));
+        top.setBackground(Color.BLACK);
+        top.add(deathMes);
+
+        //interior panel properties
+        interior.setBackground(Color.BLACK);
+        interior.add(playAgainButton);
+        interior.add(menuButton);
+
+        //remaining panel properties
+        dbot.setBackground(Color.BLACK);
+        dright.setBackground(Color.BLACK);
+        dleft.setBackground(Color.BLACK);
+
+        //add everything to frame
+        deathPanel.add(top, BorderLayout.NORTH);
+        top.setPreferredSize(new Dimension(1000, 400));
+        deathPanel.add(interior, BorderLayout.CENTER);
+        interior.setPreferredSize(new Dimension(800, 100));
+        deathPanel.add(dleft, BorderLayout.WEST);
+        dleft.setPreferredSize(new Dimension(100, 100));
+        deathPanel.add(dright, BorderLayout.EAST);
+        dright.setPreferredSize(new Dimension(100, 100));
+        deathPanel.add(dbot, BorderLayout.SOUTH);
+        dbot.setPreferredSize(new Dimension(1000, 500));
+
+         /*
+        ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+            Remaining Initialization
+         ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+         */
+
         //add components to corresponding children panels
-        deathPanel.add(playAgainButton);
-        deathPanel.add(menuButton);
-        winPanel.add(playAgainButton);
-        winPanel.add(menuButton);
 
         //set background color of children panels
         menuPanel.setBackground(Color.BLACK);
@@ -189,9 +249,12 @@ public class View {
         mainFrame.pack();
         mainFrame.setVisible(true);
 
-        /*********************************************************************************************
-        action listeners
-         *********************************************************************************************/
+        /*
+        ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+             Action listeners
+         ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+         */
+
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -214,95 +277,6 @@ public class View {
         });
     }
 
-
-
-    /*
-        Death View when user loses and can decide to play again or return to menu
-     */
-    public void DeathView() {
-        deathFrame = new JFrame("Snake Death");
-        deathFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        deathFrame.getContentPane().setBackground(Color.BLACK);
-
-        //set up frame layout
-        deathFrame.setLayout(new BorderLayout());
-
-        //panels to contain components
-        JPanel top = new JPanel();
-        JPanel interior = new JPanel();
-        JPanel left = new JPanel();
-        JPanel right = new JPanel();
-        JPanel bot = new JPanel();
-
-        //components
-        JLabel deathMes = new JLabel(" Unfortunately, Slither has died.");
-        JButton playAgainButton = new JButton(" Play Again ");
-        JButton menuButton = new JButton(" Menu ");
-
-        //set up interiorPanel
-        interior.setLayout(new GridLayout(1, 2, 200, 0));
-        interior.setBackground(Color.BLACK);
-
-        //center JLabel
-        top.setLayout(new GridBagLayout());
-
-        //deathMes and top panel properties
-        deathMes.setForeground(Color.WHITE);
-        deathMes.setFont(deathMes.getFont().deriveFont(20.0f));
-        top.setBackground(Color.BLACK);
-        top.add(deathMes);
-
-        //playAgainButton and interior panel properties
-        playAgainButton.setBackground(Color.BLACK);
-        playAgainButton.setForeground(Color.GREEN);
-        playAgainButton.setBorder(new LineBorder(Color.WHITE, 5));
-        playAgainButton.setFont(playAgainButton.getFont().deriveFont(35.0f));
-        interior.add(playAgainButton);
-
-        //menuButton properties
-        menuButton.setBackground(Color.BLACK);
-        menuButton.setForeground(Color.GREEN);
-        menuButton.setBorder(new LineBorder(Color.WHITE, 5));
-        menuButton.setFont(menuButton.getFont().deriveFont(35.0f));
-        interior.add(menuButton);
-
-        //remaining panel properties
-        bot.setBackground(Color.BLACK);
-        right.setBackground(Color.BLACK);
-        left.setBackground(Color.BLACK);
-
-
-        //add everything to frame
-        deathFrame.add(top, BorderLayout.NORTH);
-        top.setPreferredSize(new Dimension(1000, 200));
-        deathFrame.add(interior, BorderLayout.CENTER);
-        interior.setPreferredSize(new Dimension(800, 100));
-        deathFrame.add(left, BorderLayout.WEST);
-        left.setPreferredSize(new Dimension(100, 100));
-        deathFrame.add(right, BorderLayout.EAST);
-        right.setPreferredSize(new Dimension(100, 100));
-        deathFrame.add(bot, BorderLayout.SOUTH);
-        bot.setPreferredSize(new Dimension(1000, 200));
-        deathFrame.pack();
-        deathFrame.setVisible(true);
-
-        //actions listeners
-        playAgainButton.addActionListener(event -> {
-            try {
-                this.queue.put(new NewGameMessage()); // <--- adding NewGame message to the queue
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-
-        menuButton.addActionListener(event -> {
-            try {
-                this.queue.put(new NewGameMessage()); // <--- adding NewGame message to the queue
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-    }
 
     /*
         Win View when user wins and can decide to play again or return to menu
