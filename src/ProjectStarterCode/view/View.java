@@ -44,17 +44,28 @@ public class View {
         int row = 9;
         int col = 9;
 
-        /*
+        /*********************************************************************************************
             JPanels, JButtons, JTextFields, ...
-         */
-        JPanel panelContent = new JPanel();
-        JPanel menuPanel = new JPanel();
-        JPanel gamePanel = new JPanel();
-        JPanel deathPanel = new JPanel();
-        JPanel winPanel = new JPanel();
-        JButton playButton = new JButton("Play");
+         ********************************************************************************************/
+        JPanel panelContent = new JPanel();     //Parent Panel
+        JPanel menuPanel = new JPanel();        //Child Panel
+        JPanel gamePanel = new JPanel();        //Child Panel
+        JPanel deathPanel = new JPanel();        //Child Panel
+        JPanel winPanel = new JPanel();        //Child Panel
+
+        //Components used in more than one Child Panel
         JButton playAgainButton = new JButton("Play Again");
         JButton menuButton = new JButton("Menu");
+
+        //Menu Components
+        JPanel logoPanel = new JPanel();
+        JPanel playButtonPanel = new JPanel();
+        JPanel gameDescPanel = new JPanel();
+        JPanel winConPanel = new JPanel();
+        JButton playButton = new JButton("Play");
+        JLabel logo = new JLabel("Snake");
+        JLabel gameDesc = new JLabel("Eat Food to Grow in Size");
+        JLabel winCon = new JLabel("*** Win condition: When Snake's length reaches half the size of the board size ***");
 
         //Game Components
         JPanel snakeLenPanel = new JPanel();
@@ -64,18 +75,59 @@ public class View {
         JPanel bot = new JPanel();
         JLabel snakeLen = new JLabel(" Snake Length: ");
 
-        /*
+
+        /*********************************************************************************************
             layouts
-         */
+         ********************************************************************************************/
         CardLayout cl =  new CardLayout();
         panelContent.setLayout(cl);
-        gamePanel.setLayout(new BorderLayout());
 
-        //Game layouts
+        /**Menu Layouts**/
+        menuPanel.setLayout(new GridLayout(4, 1));
+
+        /**Game layouts**/
+        gamePanel.setLayout(new BorderLayout());
         fieldPanel.setLayout(new GridLayout(row, col, 3, 3));  //create a gridlayout 9x9 with vertical and horizontal gaps of 3
         fieldPanel.setBackground(Color.WHITE);  //set color of background to white to increase contrast
 
-        //Game Panel logic
+        /*********************************************************************************************
+         Panel Logic
+         ********************************************************************************************/
+        /**Menu Panel Logic**/
+            //logo and logoPanel properties
+        logo.setForeground(Color.GREEN);
+        logo.setFont(logo.getFont().deriveFont(100.0f));
+        logoPanel.setBackground(Color.BLACK);
+        logoPanel.add(logo);
+
+            //playButton and playButtonPanel properties
+        playButton.setForeground(Color.GREEN);
+        playButton.setBackground(Color.BLACK);
+        playButton.setFont(playButton.getFont().deriveFont(70.0f));
+        playButtonPanel.setBackground(Color.BLACK);
+        playButton.setBorder(new LineBorder(Color.WHITE, 5));
+        playButtonPanel.add(playButton);
+
+            //gameDesc and gameDecsPanel properties
+        gameDesc.setForeground(Color.WHITE);
+        gameDesc.setFont(gameDesc.getFont().deriveFont(20.0f));
+        gameDescPanel.setBackground(Color.BLACK);
+        gameDescPanel.add(gameDesc);
+
+            //winCon and winConPanel properties
+        winCon.setForeground(Color.WHITE);
+        winCon.setFont(gameDesc.getFont().deriveFont(20.0f));
+        winConPanel.setBackground(Color.BLACK);
+        winConPanel.add(winCon);
+
+            //add everything to frame
+        menuPanel.add(logoPanel);
+        menuPanel.add(playButtonPanel);
+        menuPanel.add(gameDescPanel);
+        menuPanel.add(winConPanel);
+        
+
+        /**Game Panel logic**/
         JLabel[][] grid = new JLabel[row][col];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
@@ -95,7 +147,7 @@ public class View {
         right.setBackground(Color.BLACK);
         left.setBackground(Color.BLACK);
 
-        //add everything to gamePanel
+        //add everything to gamePanel and initialize
         gamePanel.add(snakeLenPanel, BorderLayout.NORTH);
         snakeLenPanel.setPreferredSize(new Dimension(1000, 50));
         gamePanel.add(fieldPanel, BorderLayout.CENTER);
@@ -107,27 +159,39 @@ public class View {
         left.setPreferredSize(new Dimension(50, 1000));
         gamePanel.setVisible(true);
 
-
-
-        menuPanel.add(playButton);
+        /*********************************************************************************************
+         * Remaining Initialization
+         *********************************************************************************************/
+        //add components to corresponding children panels
         deathPanel.add(playAgainButton);
         deathPanel.add(menuButton);
         winPanel.add(playAgainButton);
         winPanel.add(menuButton);
 
+        //set background color of children panels
         menuPanel.setBackground(Color.BLACK);
         gamePanel.setBackground(Color.BLACK);
         deathPanel.setBackground(Color.BLACK);
         winPanel.setBackground(Color.BLACK);
 
+        //add children panels to parent panel
         panelContent.add(menuPanel, "1");
         panelContent.add(gamePanel, "2");
         panelContent.add(deathPanel, "3");
         panelContent.add(winPanel, "4");
 
+        //select default panel
         cl.show(panelContent, "1");
 
-        //action listeners
+        //add parent panel to frame
+        mainFrame.add(panelContent);
+        mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        mainFrame.pack();
+        mainFrame.setVisible(true);
+
+        /*********************************************************************************************
+        action listeners
+         *********************************************************************************************/
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -148,81 +212,7 @@ public class View {
                 cl.show(panelContent, "1");
             }
         });
-
-        mainFrame.add(panelContent);
-        mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        mainFrame.pack();
-        mainFrame.setVisible(true);
     }
-
-
-    /*
-        Menu View where users can start a game, learns about the game objective, and the win condition
-     */
-    public void MenuView() {
-        menuFrame = new JFrame("Snake Menu");
-        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //panels to contain components
-        JPanel logoPanel = new JPanel();
-        JPanel playButtonPanel = new JPanel();
-        JPanel gameDescPanel = new JPanel();
-        JPanel winConPanel = new JPanel();
-
-        //components
-        JLabel logo = new JLabel("Snake");
-        JButton playButton = new JButton("Play");
-        JLabel gameDesc = new JLabel("Eat Food to Grow in Size");
-        JLabel winCon = new JLabel("*** Win condition: When Snake's length reaches half the size of the board size ***");
-
-        //set up layout
-        menuFrame.setLayout(new GridLayout(4, 1));
-
-        //logo and logoPanel properties
-        logo.setForeground(Color.GREEN);
-        logo.setFont(logo.getFont().deriveFont(100.0f));
-        logoPanel.setBackground(Color.BLACK);
-        logoPanel.add(logo);
-
-        //playButton and playButtonPanel properties
-        playButton.setForeground(Color.GREEN);
-        playButton.setBackground(Color.BLACK);
-        playButton.setFont(playButton.getFont().deriveFont(70.0f));
-        playButtonPanel.setBackground(Color.BLACK);
-        playButton.setBorder(new LineBorder(Color.WHITE, 5));
-        playButtonPanel.add(playButton);
-
-        //gameDesc and gameDecsPanel properties
-        gameDesc.setForeground(Color.WHITE);
-        gameDesc.setFont(gameDesc.getFont().deriveFont(20.0f));
-        gameDescPanel.setBackground(Color.BLACK);
-        gameDescPanel.add(gameDesc);
-
-        //winCon and winConPanel properties
-        winCon.setForeground(Color.WHITE);
-        winCon.setFont(gameDesc.getFont().deriveFont(20.0f));
-        winConPanel.setBackground(Color.BLACK);
-        winConPanel.add(winCon);
-
-        //add everything to frame
-        menuFrame.add(logoPanel);
-        menuFrame.add(playButtonPanel);
-        menuFrame.add(gameDescPanel);
-        menuFrame.add(winConPanel);
-        menuFrame.pack();
-        menuFrame.setVisible(true);
-
-
-        //actions listeners
-        playButton.addActionListener(event -> {
-            try {
-                this.queue.put(new NewGameMessage()); // <--- adding NewGame message to the queue
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
 
 
 
