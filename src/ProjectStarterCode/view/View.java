@@ -331,6 +331,7 @@ public class View {
             }
         });
 
+        /** Play button action listener*/
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -347,6 +348,7 @@ public class View {
             }
         });
 
+        /** Play again button action listener*/
         playAgainButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -363,6 +365,7 @@ public class View {
             }
         });
 
+        /** Menu button action listener*/
         menuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -375,6 +378,7 @@ public class View {
             }
         });
 
+        /** Win play again button action listener*/
         winPlayAgainButtonButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -391,6 +395,7 @@ public class View {
             }
         });
 
+        /** Win Menu Button action listener*/
         winMenuButtonButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -404,7 +409,10 @@ public class View {
         });
     }
 
-    //checks the board provided and updates the displayed grid accordingly
+    /**
+    * @param fullGrid the tiles to be updated
+    * checks the board provided and updates the displayed grid accordingly
+    */
     public void updateGrid(Tile[][] fullGrid) {
         for (int i = 0; i < fullGrid.length; i++) {
             for (int j = 0; j < fullGrid[0].length; j++) {
