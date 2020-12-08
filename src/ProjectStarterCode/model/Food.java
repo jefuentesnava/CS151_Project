@@ -1,5 +1,3 @@
-package ProjectStarterCode.model;
-
 public class Food {
 
     /**
@@ -11,7 +9,6 @@ public class Food {
 
     /**
      * Produces a food object which will be placed on a tile of the board
-     *
      * @param board the board in which the food will be placed
      */
     public Food(Board board) {
@@ -20,6 +17,12 @@ public class Food {
         spawnFood();
     }
 
+    /**
+     * Produces a food object which will be placed on a tile of the board
+     * @param board the board in which the food will be placed
+     * @x is the x coordinate of where the food will be placed on the Board             
+     * @y is the y coordinate of where the food will be placed on the Board                   
+     */
     public Food(Board board, int x, int y) {
         this.board = board;
         this.location = board.tiles[x][y];
@@ -63,7 +66,6 @@ public class Food {
 
     /**
      * Returns the String with the location of the food
-     *
      * @return the String with the location of the food
      */
     @Override
