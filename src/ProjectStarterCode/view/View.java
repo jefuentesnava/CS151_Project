@@ -291,7 +291,7 @@ public class View {
         panelContent.add(winPanel, "4");
 
         //select default panel
-        cl.show(panelContent, "3");
+        cl.show(panelContent, "1");
 
         //add parent panel to frame
         mainFrame.add(panelContent);
