@@ -20,6 +20,7 @@ public class Model {
         this.view = view;
     }
 
+    //resets the board, snake, food and collision
     public void reset() {
         board = new Board();
         snake = new Snake(board);
@@ -27,6 +28,7 @@ public class Model {
         collision = new Collision(board, snake);
     }
 
+    //moves the snake, spawns food if necessary and tells view to update itself
     public void updateModel() {
         //snake movement is calculated
         collision.snakeCollision();

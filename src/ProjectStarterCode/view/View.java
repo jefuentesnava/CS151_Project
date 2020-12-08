@@ -404,6 +404,7 @@ public class View {
         });
     }
 
+    //checks the board provided and updates the displayed grid accordingly
     public void updateGrid(Tile[][] fullGrid) {
         for (int i = 0; i < fullGrid.length; i++) {
             for (int j = 0; j < fullGrid[0].length; j++) {

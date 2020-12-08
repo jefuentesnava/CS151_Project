@@ -1,16 +1,17 @@
 package ProjectStarterCode.model;
 
 public class Collision {
-     /**
+    /**
      * Constitutes the Collision of the snake
      * with itself or food
      */
     public Snake snake;
     public Board board;
 
-     /**
+    /**
      * Creates a collision object with
      * a board and snake objects
+     *
      * @param board
      * @param snake
      */
@@ -19,7 +20,7 @@ public class Collision {
         this.snake = snake;
     }
 
-     /**
+    /**
      * Updates the movement of the snake, which
      * can go up, down, left or right
      */
@@ -63,10 +64,10 @@ public class Collision {
         }
     }
 
-     /**
+    /**
      * Checks what is inside the next tile,
-     * and depending on what is found 
-     * either does nothing, makes the snake grow, or ends the game
+     * and depending on what is found
+     * either does nothing, makes the snake grow, or marks snake as dead
      */
     private void nextTileReaction(Tile nextTile) {
         if (nextTile.getInsideTile().equals("snake")) {

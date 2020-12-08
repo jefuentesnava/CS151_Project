@@ -2,20 +2,22 @@ package ProjectStarterCode.model;
 
 public class Food {
 
-     /**
+    /**
      * Produces the food that the snake will eat, which
      * will be in one of the tiles of the board.
      */
     public Tile location;
     public Board board;
 
-     /**
+    /**
      * Produces a food object which will be placed on a tile of the board
+     *
      * @param board the board in which the food will be placed
      */
     public Food(Board board) {
         this.board = board;
         this.location = null;
+        spawnFood();
     }
 
     public Food(Board board, int x, int y) {
@@ -24,7 +26,7 @@ public class Food {
         board.tiles[x][y].setInsideTile("food");
     }
 
-     /**
+    /**
      * Spawns food on a random tile that contains
      * nothing, if food is not on the board
      */
@@ -43,9 +45,10 @@ public class Food {
     }
 
     /**
-    * Checks whether food is on board
-    * @return true or false, depending if food is found or not on the board.
-    */
+     * Checks whether food is on board
+     *
+     * @return true or false, depending if food is found or not on the board.
+     */
     public boolean foodIsOnBoard() {
         //iterate through tiles of board and check if food is there
         for (int i = 0; i < board.tiles.length; i++) {
@@ -57,9 +60,10 @@ public class Food {
         }
         return false;
     }
-    
+
     /**
      * Returns the String with the location of the food
+     *
      * @return the String with the location of the food
      */
     @Override
