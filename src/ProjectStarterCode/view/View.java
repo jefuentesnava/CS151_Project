@@ -55,7 +55,7 @@ public class View {
         JButton playAgainButton = new JButton("Play Again");
         JButton menuButton = new JButton("Menu");
 
-        //Menu Components
+        //Menu Panel Components
         JPanel logoPanel = new JPanel();
         JPanel playButtonPanel = new JPanel();
         JPanel gameDescPanel = new JPanel();
@@ -65,7 +65,7 @@ public class View {
         JLabel gameDesc = new JLabel("Eat Food to Grow in Size");
         JLabel winCon = new JLabel("*** Win condition: When Snake's length reaches half the size of the board size ***");
 
-        //Game Components
+        //Game Panel Components
         JPanel snakeLenPanel = new JPanel();
         JPanel fieldPanel = new JPanel();
         JPanel left = new JPanel();
@@ -73,13 +73,22 @@ public class View {
         JPanel bot = new JPanel();
         JLabel snakeLen = new JLabel(" Snake Length: ");
 
-        //Death Components
+        //Death Panel Components
         JPanel top = new JPanel();
         JPanel interior = new JPanel();
         JPanel dleft = new JPanel();
         JPanel dright = new JPanel();
         JPanel dbot = new JPanel();
         JLabel deathMes = new JLabel(" Unfortunately, Slither has died.");
+
+        //Win Panel Components
+        JPanel wtop = new JPanel();
+        JPanel winterior = new JPanel();
+        JPanel wleft = new JPanel();
+        JPanel wright = new JPanel();
+        JPanel wbot = new JPanel();
+        JLabel winMes = new JLabel(" Congratulations, you fed Slither a lot! ");
+
         /*
         ----------------------------------------------------------------------------------------------------------------------------------------------------------------
             layouts
@@ -102,6 +111,10 @@ public class View {
         interior.setLayout(new GridLayout(1, 2, 200, 0));
         top.setLayout(new GridBagLayout());
 
+        /*Win Panel**/
+        winPanel.setLayout(new BorderLayout());
+        winterior.setLayout(new GridLayout(1, 2, 200, 0));
+        wtop.setLayout(new GridBagLayout());
 
          /*
         ----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -194,7 +207,7 @@ public class View {
         /*Death Panel Logic********/
             //deathMes and top panel properties
         deathMes.setForeground(Color.WHITE);
-        deathMes.setFont(deathMes.getFont().deriveFont(20.0f));
+        deathMes.setFont(deathMes.getFont().deriveFont(40.0f));
         top.setBackground(Color.BLACK);
         top.add(deathMes);
 
@@ -208,7 +221,7 @@ public class View {
         dright.setBackground(Color.BLACK);
         dleft.setBackground(Color.BLACK);
 
-        //add everything to frame
+        /*add everything to mainframe**/
         deathPanel.add(top, BorderLayout.NORTH);
         top.setPreferredSize(new Dimension(1000, 400));
         deathPanel.add(interior, BorderLayout.CENTER);
@@ -219,6 +232,36 @@ public class View {
         dright.setPreferredSize(new Dimension(100, 100));
         deathPanel.add(dbot, BorderLayout.SOUTH);
         dbot.setPreferredSize(new Dimension(1000, 500));
+
+        /*Win Panel Logic******************************************/
+        winterior.setBackground(Color.BLACK);
+        winMes.setForeground(Color.WHITE);
+        winMes.setFont(winMes.getFont().deriveFont(20.0f));
+        wtop.setBackground(Color.BLACK);
+        wtop.add(winMes);
+
+        //playAgainButton and interior panel properties
+        winterior.add(playAgainButton);
+
+        //menuButton properties
+        winterior.add(menuButton);
+
+        //remaining panel properties
+        wbot.setBackground(Color.BLACK);
+        wright.setBackground(Color.BLACK);
+        wleft.setBackground(Color.BLACK);
+
+        //add everything to frame
+        winPanel.add(wtop, BorderLayout.NORTH);
+        wtop.setPreferredSize(new Dimension(1000, 400));
+        winPanel.add(winterior, BorderLayout.CENTER);
+        winterior.setPreferredSize(new Dimension(800, 100));
+        winPanel.add(wleft, BorderLayout.WEST);
+        wleft.setPreferredSize(new Dimension(100, 100));
+        winPanel.add(wright, BorderLayout.EAST);
+        wright.setPreferredSize(new Dimension(100, 100));
+        winPanel.add(wbot, BorderLayout.SOUTH);
+        wbot.setPreferredSize(new Dimension(1000, 500));
 
          /*
         ----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -241,7 +284,7 @@ public class View {
         panelContent.add(winPanel, "4");
 
         //select default panel
-        cl.show(panelContent, "1");
+        cl.show(panelContent, "3");
 
         //add parent panel to frame
         mainFrame.add(panelContent);
@@ -273,95 +316,6 @@ public class View {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cl.show(panelContent, "1");
-            }
-        });
-    }
-
-
-    /*
-        Win View when user wins and can decide to play again or return to menu
-     */
-    public void WinView() {
-        winFrame = new JFrame("Snake Win");
-        winFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        winFrame.getContentPane().setBackground(Color.BLACK);
-
-        //set up frame layout
-        winFrame.setLayout(new BorderLayout());
-
-        //panels to contain components
-        JPanel top = new JPanel();
-        JPanel interior = new JPanel();
-        JPanel left = new JPanel();
-        JPanel right = new JPanel();
-        JPanel bot = new JPanel();
-
-        //components
-        JLabel winMes = new JLabel(" Congratulations, you fed Slither a lot! ");
-        JButton playAgainButton = new JButton(" Play Again ");
-        JButton menuButton = new JButton(" Menu ");
-
-        //set up interiorPanel
-        interior.setLayout(new GridLayout(1, 2, 200, 0));
-        interior.setBackground(Color.BLACK);
-
-        //center JLabel
-        top.setLayout(new GridBagLayout());
-
-        //winMes and top panel properties
-        winMes.setForeground(Color.WHITE);
-        winMes.setFont(winMes.getFont().deriveFont(20.0f));
-        top.setBackground(Color.BLACK);
-        top.add(winMes);
-
-        //playAgainButton and interior panel properties
-        playAgainButton.setBackground(Color.BLACK);
-        playAgainButton.setForeground(Color.GREEN);
-        playAgainButton.setBorder(new LineBorder(Color.WHITE, 5));
-        playAgainButton.setFont(playAgainButton.getFont().deriveFont(35.0f));
-        interior.add(playAgainButton);
-
-        //menuButton properties
-        menuButton.setBackground(Color.BLACK);
-        menuButton.setForeground(Color.GREEN);
-        menuButton.setBorder(new LineBorder(Color.WHITE, 5));
-        menuButton.setFont(menuButton.getFont().deriveFont(35.0f));
-        interior.add(menuButton);
-
-        //remaining panel properties
-        bot.setBackground(Color.BLACK);
-        right.setBackground(Color.BLACK);
-        left.setBackground(Color.BLACK);
-
-
-        //add everything to frame
-        winFrame.add(top, BorderLayout.NORTH);
-        top.setPreferredSize(new Dimension(1000, 200));
-        winFrame.add(interior, BorderLayout.CENTER);
-        interior.setPreferredSize(new Dimension(800, 100));
-        winFrame.add(left, BorderLayout.WEST);
-        left.setPreferredSize(new Dimension(100, 100));
-        winFrame.add(right, BorderLayout.EAST);
-        right.setPreferredSize(new Dimension(100, 100));
-        winFrame.add(bot, BorderLayout.SOUTH);
-        bot.setPreferredSize(new Dimension(1000, 200));
-        winFrame.pack();
-        winFrame.setVisible(true);
-
-        //actions listeners
-        playAgainButton.addActionListener(event -> {
-            try {
-                this.queue.put(new NewGameMessage()); // <--- adding NewGame message to the queue
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-
-        menuButton.addActionListener(event -> {
-            try {
-                this.queue.put(new NewGameMessage()); // <--- adding NewGame message to the queue
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
         });
     }
