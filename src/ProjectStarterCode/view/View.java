@@ -3,6 +3,8 @@ package ProjectStarterCode.view;
 import ProjectStarterCode.controller.Message;
 import ProjectStarterCode.controller.PlayGameMessage;
 import ProjectStarterCode.controller.ReturnToMenuMessage;
+import ProjectStarterCode.model.Model;
+import ProjectStarterCode.model.Tile;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -14,24 +16,27 @@ import java.util.concurrent.BlockingQueue;
 public class View {
     private JFrame mainFrame;
     private BlockingQueue<Message> queue;
+    private Model model;
+    JLabel[][] grid;
 
-    public static View init(BlockingQueue<Message> queue) {
+    public static View init(BlockingQueue<Message> queue, Model model) {
         // Create object of type view
-        return new View(queue);
+        return new View(queue, model);
     }
 
-    private View(BlockingQueue<Message> queue) {
+    private View(BlockingQueue<Message> queue, Model model) {
         this.queue = queue;
+        this.model = model;
         // TODO:
         // you should initalize JFrame and show it,
         // JFrame should be able to add Messages to queue
         // JFrame can be in a separate class or created JFrame with all the elements in this class
         // or you can make View a subclass of JFrame by extending it
-        
+
         GameViews();
     }
 
-    public void GameViews(){
+    public void GameViews() {
         mainFrame = new JFrame("Snake");
 
         int row = 9;
@@ -96,7 +101,7 @@ public class View {
          ----------------------------------------------------------------------------------------------------------------------------------------------------------------
          */
 
-        CardLayout cl =  new CardLayout();
+        CardLayout cl = new CardLayout();
         panelContent.setLayout(cl);
 
         /*Menu Layouts**/
@@ -124,13 +129,13 @@ public class View {
          */
 
         /*Menu Panel Logic**/
-            //logo and logoPanel properties
+        //logo and logoPanel properties
         logo.setForeground(Color.GREEN);
         logo.setFont(logo.getFont().deriveFont(200.0f));
         logoPanel.setBackground(Color.BLACK);
         logoPanel.add(logo);
 
-            //playButton and playButtonPanel properties
+        //playButton and playButtonPanel properties
         playButton.setForeground(Color.GREEN);
         playButton.setBackground(Color.BLACK);
         playButton.setFont(playButton.getFont().deriveFont(140.0f));
@@ -138,19 +143,19 @@ public class View {
         playButton.setBorder(new LineBorder(Color.WHITE, 5));
         playButtonPanel.add(playButton);
 
-            //gameDesc and gameDecsPanel properties
+        //gameDesc and gameDecsPanel properties
         gameDesc.setForeground(Color.WHITE);
         gameDesc.setFont(gameDesc.getFont().deriveFont(20.0f));
         gameDescPanel.setBackground(Color.BLACK);
         gameDescPanel.add(gameDesc);
 
-            //winCon and winConPanel properties
+        //winCon and winConPanel properties
         winCon.setForeground(Color.WHITE);
         winCon.setFont(gameDesc.getFont().deriveFont(20.0f));
         winConPanel.setBackground(Color.BLACK);
         winConPanel.add(winCon);
 
-            //add everything to frame
+        //add everything to frame
         menuPanel.add(logoPanel);
         menuPanel.add(playButtonPanel);
         menuPanel.add(gameDescPanel);
@@ -158,7 +163,7 @@ public class View {
 
 
         /*Game Panel logic**/
-        JLabel[][] grid = new JLabel[row][col];
+        grid = new JLabel[row][col];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 grid[i][j] = new JLabel();
@@ -192,7 +197,7 @@ public class View {
         gamePanel.setVisible(true);
 
         /*Death Panel Logic********/
-            //deathMes and top panel properties
+        //deathMes and top panel properties
         deathMes.setForeground(Color.WHITE);
         deathMes.setFont(deathMes.getFont().deriveFont(40.0f));
         top.setBackground(Color.BLACK);
@@ -304,12 +309,37 @@ public class View {
              Action listeners
          ----------------------------------------------------------------------------------------------------------------------------------------------------------------
          */
+        //timer to update snake position
+        Timer timer = new Timer(500, event -> {
+            if (model.snake.isAlive()) {
+                model.updateModel();
+            }
+        });
+
+        //timer to check if snake is dead or has reached the required size and stops the timer
+        final Timer endConditionCheck = new Timer(500, event -> {
+            if (!model.snake.isAlive()) {
+                cl.show(panelContent, "3");
+                timer.stop();
+                ((Timer) (event.getSource())).stop();
+            } else {
+                if (model.snake.checkWinCondition()) {
+                    cl.show(panelContent, "4");
+                    timer.stop();
+                    ((Timer) (event.getSource())).stop();
+                }
+            }
+        });
 
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     cl.show(panelContent, "2");
+                    model.reset();
+                    model.updateModel();
+                    timer.start();
+                    endConditionCheck.start();
                     queue.put(new PlayGameMessage());
                 } catch (InterruptedException interruptedException) {
                     interruptedException.printStackTrace();
@@ -322,6 +352,10 @@ public class View {
             public void actionPerformed(ActionEvent e) {
                 try {
                     cl.show(panelContent, "2");
+                    model.reset();
+                    model.updateModel();
+                    timer.start();
+                    endConditionCheck.start();
                     queue.put(new PlayGameMessage());
                 } catch (InterruptedException interruptedException) {
                     interruptedException.printStackTrace();
@@ -340,11 +374,16 @@ public class View {
                 }
             }
         });
+
         winPlayAgainButtonButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     cl.show(panelContent, "2");
+                    model.reset();
+                    model.updateModel();
+                    timer.start();
+                    endConditionCheck.start();
                     queue.put(new PlayGameMessage());
                 } catch (InterruptedException interruptedException) {
                     interruptedException.printStackTrace();
@@ -364,6 +403,21 @@ public class View {
             }
         });
     }
+
+    public void updateGrid(Tile[][] fullGrid) {
+        for (int i = 0; i < fullGrid.length; i++) {
+            for (int j = 0; j < fullGrid[0].length; j++) {
+                if (fullGrid[i][j].getInsideTile().equals("nothing")) {
+                    grid[i][j].setBackground(Color.GRAY);
+                } else if (fullGrid[i][j].getInsideTile().equals("snake")) {
+                    grid[i][j].setBackground(Color.GREEN);
+                } else if (fullGrid[i][j].getInsideTile().equals("food")) {
+                    grid[i][j].setBackground(Color.RED);
+                }
+            }
+        }
+    }
+
 
     public void change() {
         // TODO: do all the updates and repaint
@@ -385,4 +439,6 @@ public class View {
  *https://stackoverflow.com/questions/36159929/printing-a-2d-array-of-jlabels-to-a-gridlayout
  *
  * https://stackoverflow.com/questions/9829319/centering-a-jlabel-in-a-jpanel
+ *
+ * https://stackoverflow.com/questions/3858920/stop-a-swing-timer-from-inside-the-action-listener
  */

@@ -42,7 +42,7 @@ public class Snake {
      /**
      * Will make the Snake be dead by changing the status of alive
      * @return alive
-     */ 
+     */
     public boolean toggleAlive() {
         alive = !alive;
         return alive;

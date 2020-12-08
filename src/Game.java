@@ -1,3 +1,4 @@
+import ProjectStarterCode.controller.Controller;
 import ProjectStarterCode.controller.Message;
 import ProjectStarterCode.model.Model;
 import ProjectStarterCode.view.View;
@@ -5,7 +6,7 @@ import ProjectStarterCode.view.View;
 import java.util.concurrent.BlockingQueue;
 
 public class Game {
-     /**
+    /**
      * Builds a game, with a Board where the user controls a snake (up, down, left, right),
      * which has the objective of consuming food until it exceeds the size of
      * 40 tiles.
@@ -23,21 +24,14 @@ public class Game {
 
     public static void main(String[] args) {
 
-        view = View.init(queue);
         model = new Model();
-        //Controller game = new Controller(view, model, queue);
+        view = View.init(queue, model);
+        model.attach(view);
+        Controller game = new Controller(view, model, queue);
+        game.mainLoop();
+        view.dispose();
+        queue.clear();
 
-        //game.mainLoop();
-        //view.dispose();
-        //queue.clear();
-
-
-        model.board.printBoard();
-        for (int i = 0; i < 3; i++) {
-            model.snake.printSnake();
-            model.updateModel();
-            model.board.printBoard();
-        }
     }
 
 }
