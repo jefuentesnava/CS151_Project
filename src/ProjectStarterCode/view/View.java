@@ -12,7 +12,6 @@ import java.util.concurrent.BlockingQueue;
 
 public class View {
     private JFrame mainFrame;
-    private JFrame winFrame;
     private BlockingQueue<Message> queue;
 
     public static View init(BlockingQueue<Message> queue) {
@@ -27,9 +26,7 @@ public class View {
         // JFrame should be able to add Messages to queue
         // JFrame can be in a separate class or created JFrame with all the elements in this class
         // or you can make View a subclass of JFrame by extending it
-
-
-//        WinView();
+        
         GameViews();
     }
 
@@ -52,8 +49,7 @@ public class View {
         JPanel winPanel = new JPanel();        //Child Panel
 
         //Components used in more than one Child Panel
-        JButton playAgainButton = new JButton("Play Again");
-        JButton menuButton = new JButton("Menu");
+
 
         //Menu Panel Components
         JPanel logoPanel = new JPanel();
@@ -76,18 +72,22 @@ public class View {
         //Death Panel Components
         JPanel top = new JPanel();
         JPanel interior = new JPanel();
-        JPanel dleft = new JPanel();
-        JPanel dright = new JPanel();
-        JPanel dbot = new JPanel();
+        JPanel deathLeft = new JPanel();
+        JPanel deathRight = new JPanel();
+        JPanel deathBot = new JPanel();
         JLabel deathMes = new JLabel(" Unfortunately, Slither has died.");
+        JButton playAgainButton = new JButton("Play Again");
+        JButton menuButton = new JButton("Menu");
 
         //Win Panel Components
-        JPanel wtop = new JPanel();
-        JPanel winterior = new JPanel();
-        JPanel wleft = new JPanel();
-        JPanel wright = new JPanel();
-        JPanel wbot = new JPanel();
+        JPanel winTop = new JPanel();
+        JPanel winInterior = new JPanel();
+        JPanel winLeft = new JPanel();
+        JPanel winRight = new JPanel();
+        JPanel winBot = new JPanel();
         JLabel winMes = new JLabel(" Congratulations, you fed Slither a lot! ");
+        JButton winPlayAgainButtonButton = new JButton("Play Again");
+        JButton winMenuButtonButton = new JButton("Menu");
 
         /*
         ----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -113,8 +113,8 @@ public class View {
 
         /*Win Panel**/
         winPanel.setLayout(new BorderLayout());
-        winterior.setLayout(new GridLayout(1, 2, 200, 0));
-        wtop.setLayout(new GridBagLayout());
+        winInterior.setLayout(new GridLayout(1, 2, 200, 0));
+        winTop.setLayout(new GridBagLayout());
 
          /*
         ----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -190,20 +190,6 @@ public class View {
         left.setPreferredSize(new Dimension(50, 1000));
         gamePanel.setVisible(true);
 
-        /* Death and Win condition Shared Logic*****************/
-            //playAgainButton properties
-        playAgainButton.setBackground(Color.BLACK);
-        playAgainButton.setForeground(Color.GREEN);
-        playAgainButton.setBorder(new LineBorder(Color.WHITE, 5));
-        playAgainButton.setFont(playAgainButton.getFont().deriveFont(35.0f));
-
-            //menuButton properties
-        menuButton.setBackground(Color.BLACK);
-        menuButton.setForeground(Color.GREEN);
-        menuButton.setBorder(new LineBorder(Color.WHITE, 5));
-        menuButton.setFont(menuButton.getFont().deriveFont(35.0f));
-
-
         /*Death Panel Logic********/
             //deathMes and top panel properties
         deathMes.setForeground(Color.WHITE);
@@ -211,57 +197,77 @@ public class View {
         top.setBackground(Color.BLACK);
         top.add(deathMes);
 
+        //playAgainButton properties
+        playAgainButton.setBackground(Color.BLACK);
+        playAgainButton.setForeground(Color.GREEN);
+        playAgainButton.setBorder(new LineBorder(Color.WHITE, 5));
+        playAgainButton.setFont(playAgainButton.getFont().deriveFont(35.0f));
+
+        //menuButton properties
+        menuButton.setBackground(Color.BLACK);
+        menuButton.setForeground(Color.GREEN);
+        menuButton.setBorder(new LineBorder(Color.WHITE, 5));
+        menuButton.setFont(menuButton.getFont().deriveFont(35.0f));
+
         //interior panel properties
         interior.setBackground(Color.BLACK);
         interior.add(playAgainButton);
         interior.add(menuButton);
 
         //remaining panel properties
-        dbot.setBackground(Color.BLACK);
-        dright.setBackground(Color.BLACK);
-        dleft.setBackground(Color.BLACK);
+        deathBot.setBackground(Color.BLACK);
+        deathRight.setBackground(Color.BLACK);
+        deathLeft.setBackground(Color.BLACK);
 
         /*add everything to mainframe**/
         deathPanel.add(top, BorderLayout.NORTH);
         top.setPreferredSize(new Dimension(1000, 400));
         deathPanel.add(interior, BorderLayout.CENTER);
         interior.setPreferredSize(new Dimension(800, 100));
-        deathPanel.add(dleft, BorderLayout.WEST);
-        dleft.setPreferredSize(new Dimension(100, 100));
-        deathPanel.add(dright, BorderLayout.EAST);
-        dright.setPreferredSize(new Dimension(100, 100));
-        deathPanel.add(dbot, BorderLayout.SOUTH);
-        dbot.setPreferredSize(new Dimension(1000, 500));
+        deathPanel.add(deathLeft, BorderLayout.WEST);
+        deathLeft.setPreferredSize(new Dimension(100, 100));
+        deathPanel.add(deathRight, BorderLayout.EAST);
+        deathRight.setPreferredSize(new Dimension(100, 100));
+        deathPanel.add(deathBot, BorderLayout.SOUTH);
+        deathBot.setPreferredSize(new Dimension(1000, 500));
 
         /*Win Panel Logic******************************************/
-        winterior.setBackground(Color.BLACK);
+        winInterior.setBackground(Color.BLACK);
         winMes.setForeground(Color.WHITE);
         winMes.setFont(winMes.getFont().deriveFont(20.0f));
-        wtop.setBackground(Color.BLACK);
-        wtop.add(winMes);
+        winTop.setBackground(Color.BLACK);
+        winTop.add(winMes);
 
-        //playAgainButton and interior panel properties
-        winterior.add(playAgainButton);
+        //winPlayAgainButtonButton properties
+        winPlayAgainButtonButton.setBackground(Color.BLACK);
+        winPlayAgainButtonButton.setForeground(Color.GREEN);
+        winPlayAgainButtonButton.setBorder(new LineBorder(Color.WHITE, 5));
+        winPlayAgainButtonButton.setFont(playAgainButton.getFont().deriveFont(35.0f));
+        winInterior.add(winPlayAgainButtonButton);
 
         //menuButton properties
-        winterior.add(menuButton);
+        winMenuButtonButton.setBackground(Color.BLACK);
+        winMenuButtonButton.setForeground(Color.GREEN);
+        winMenuButtonButton.setBorder(new LineBorder(Color.WHITE, 5));
+        winMenuButtonButton.setFont(menuButton.getFont().deriveFont(35.0f));
+        winInterior.add(winMenuButtonButton);
 
         //remaining panel properties
-        wbot.setBackground(Color.BLACK);
-        wright.setBackground(Color.BLACK);
-        wleft.setBackground(Color.BLACK);
+        winBot.setBackground(Color.BLACK);
+        winRight.setBackground(Color.BLACK);
+        winLeft.setBackground(Color.BLACK);
 
         //add everything to frame
-        winPanel.add(wtop, BorderLayout.NORTH);
-        wtop.setPreferredSize(new Dimension(1000, 400));
-        winPanel.add(winterior, BorderLayout.CENTER);
-        winterior.setPreferredSize(new Dimension(800, 100));
-        winPanel.add(wleft, BorderLayout.WEST);
-        wleft.setPreferredSize(new Dimension(100, 100));
-        winPanel.add(wright, BorderLayout.EAST);
-        wright.setPreferredSize(new Dimension(100, 100));
-        winPanel.add(wbot, BorderLayout.SOUTH);
-        wbot.setPreferredSize(new Dimension(1000, 500));
+        winPanel.add(winTop, BorderLayout.NORTH);
+        winTop.setPreferredSize(new Dimension(1000, 400));
+        winPanel.add(winInterior, BorderLayout.CENTER);
+        winInterior.setPreferredSize(new Dimension(800, 100));
+        winPanel.add(winLeft, BorderLayout.WEST);
+        winLeft.setPreferredSize(new Dimension(100, 100));
+        winPanel.add(winRight, BorderLayout.EAST);
+        winRight.setPreferredSize(new Dimension(100, 100));
+        winPanel.add(winBot, BorderLayout.SOUTH);
+        winBot.setPreferredSize(new Dimension(1000, 500));
 
          /*
         ----------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -284,7 +290,7 @@ public class View {
         panelContent.add(winPanel, "4");
 
         //select default panel
-        cl.show(panelContent, "3");
+        cl.show(panelContent, "1");
 
         //add parent panel to frame
         mainFrame.add(panelContent);
@@ -318,6 +324,19 @@ public class View {
                 cl.show(panelContent, "1");
             }
         });
+        winPlayAgainButtonButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cl.show(panelContent, "2");
+            }
+        });
+
+        winMenuButtonButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cl.show(panelContent, "1");
+            }
+        });
     }
 
     public void change() {
@@ -327,7 +346,7 @@ public class View {
 
     public void dispose() {
         // TODO: clear all the resources
-        // for example, gameFrame.dispose();
+        mainFrame.dispose();
     }
 }
 
