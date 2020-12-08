@@ -1,8 +1,7 @@
 package ProjectStarterCode.controller;
 
-public class NewGameMessage implements Message {
+public class PlayGameMessage implements Message {
 }
-
 
 class RightClickMessage implements Message {
     int x;

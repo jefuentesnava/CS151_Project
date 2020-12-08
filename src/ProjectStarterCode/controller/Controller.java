@@ -19,7 +19,8 @@ public class Controller {
         this.view = view;
         this.model = model;
         this.queue = queue;
-        valves.add(new DoNewGameValve());
+        valves.add(new DoPlayGameValve());
+        valves.add(new DoReturnToMenuValve());
         valves.add(new DoHitValve());
     }
 
@@ -54,10 +55,11 @@ public class Controller {
         public ValveResponse execute(Message message);
     }
 
-    private class DoNewGameValve implements Valve {
+
+    private class DoPlayGameValve implements Valve {
         @Override
         public ValveResponse execute(Message message) {
-            if (message.getClass() != NewGameMessage.class) {
+            if (message.getClass() != PlayGameMessage.class) {
                 return ValveResponse.MISS;
             }
             // otherwise it means that it is a NewGameMessage message
@@ -65,6 +67,20 @@ public class Controller {
             // actions in View
             return ValveResponse.EXECUTED;
         }
+    }
+
+    private class DoReturnToMenuValve implements  Valve{
+        @Override
+        public ValveResponse execute(Message message){
+            if (message.getClass() != ReturnToMenuMessage.class){
+                return ValveResponse.MISS;
+            }
+            // otherwise it means that it is a ReturnToMenu message
+            // actions in Model
+            // actions in View
+            return ValveResponse.EXECUTED;
+        }
+
     }
 
     private class DoHitValve implements Valve {

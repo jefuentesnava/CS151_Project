@@ -1,7 +1,8 @@
 package ProjectStarterCode.view;
 
 import ProjectStarterCode.controller.Message;
-import ProjectStarterCode.controller.NewGameMessage;
+import ProjectStarterCode.controller.PlayGameMessage;
+import ProjectStarterCode.controller.ReturnToMenuMessage;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -290,7 +291,7 @@ public class View {
         panelContent.add(winPanel, "4");
 
         //select default panel
-        cl.show(panelContent, "1");
+        cl.show(panelContent, "3");
 
         //add parent panel to frame
         mainFrame.add(panelContent);
@@ -307,34 +308,59 @@ public class View {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cl.show(panelContent, "2");
+                try {
+                    cl.show(panelContent, "2");
+                    queue.put(new PlayGameMessage());
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
             }
         });
 
         playAgainButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cl.show(panelContent, "2");
+                try {
+                    cl.show(panelContent, "2");
+                    queue.put(new PlayGameMessage());
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
             }
         });
 
         menuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cl.show(panelContent, "1");
+                try {
+                    cl.show(panelContent, "1");
+                    queue.put(new ReturnToMenuMessage());
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
             }
         });
         winPlayAgainButtonButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cl.show(panelContent, "2");
+                try {
+                    cl.show(panelContent, "2");
+                    queue.put(new PlayGameMessage());
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
             }
         });
 
         winMenuButtonButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cl.show(panelContent, "1");
+                try {
+                    cl.show(panelContent, "1");
+                    queue.put(new ReturnToMenuMessage());
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
             }
         });
     }
