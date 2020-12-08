@@ -1,12 +1,10 @@
-package ProjectStarterCode.model;
-
 public class Tile {
     /**
      *  Constitutes the tiles that will be used on the board of the game.
      *  It will either contain the part of a snake, food, or nothing.
      */
-    private String containing;
-    private int row, col;
+    private String containing; /**Will describe what the tile contains*/
+    private int row, col;  /** row and column of the tile */
 
     /**
      * Constructs are tile holding nothing by default.
