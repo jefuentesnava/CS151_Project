@@ -1,13 +1,19 @@
+package ProjectStarterCode.model;
+
 public class Tile {
     /**
-     *  Constitutes the tiles that will be used on the board of the game.
-     *  It will either contain the part of a snake, food, or nothing.
+     * Constitutes the tiles that will be used on the board of the game.
+     * It will either contain the part of a snake, food, or nothing.
      */
-    private String containing; /**Will describe what the tile contains*/
+    private String containing;
+    /**
+     * Will describe what the tile contains
+     */
     private int row, col;  /** row and column of the tile */
 
     /**
      * Constructs are tile holding nothing by default.
+     *
      * @param row the row in which the tile will be located.
      * @param col the column in which the tile will be located.
      */
@@ -19,6 +25,7 @@ public class Tile {
 
     /**
      * Gets what the tile contains
+     *
      * @return containing
      */
     public String getInsideTile() {
@@ -27,6 +34,7 @@ public class Tile {
 
     /**
      * Sets what the tile contains.
+     *
      * @param setting
      */
     public void setInsideTile(String setting) {
@@ -35,6 +43,7 @@ public class Tile {
 
     /**
      * Returns the row where the tile is located.
+     *
      * @return row
      */
     public int getRow() {
@@ -43,6 +52,7 @@ public class Tile {
 
     /**
      * Returns the column where the tile is located
+     *
      * @return col
      */
     public int getCol() {
@@ -51,6 +61,7 @@ public class Tile {
 
     /**
      * Prints the tile contains, in addition to its row and column
+     *
      * @return String
      */
     @Override

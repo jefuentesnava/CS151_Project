@@ -12,7 +12,7 @@ public class Model {
     public Model() {
         board = new Board();
         snake = new Snake(board);
-        food = new Food(board, 6, 4); //#'s to be removed when not testing
+        food = new Food(board);
         collision = new Collision(board, snake);
     }
 
@@ -24,7 +24,7 @@ public class Model {
     public void reset() {
         board = new Board();
         snake = new Snake(board);
-        food = new Food(board, 6, 4); //#'s to be removed when not testing
+        food = new Food(board);
         collision = new Collision(board, snake);
     }
 
