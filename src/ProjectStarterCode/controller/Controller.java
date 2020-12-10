@@ -24,6 +24,9 @@ public class Controller {
         valves.add(new DoHitValve());
     }
 
+    /**
+     * Executes the incoming valves messages from the BlockingQueue
+     */
     public void mainLoop() {
         ValveResponse response = ValveResponse.EXECUTED;
         Message message = null;
@@ -44,18 +47,16 @@ public class Controller {
         }
     }
 
-    private void updateGameInfo() {
-
-    }
-
     private interface Valve {
         /**
          * Performs certain action in response to message
          */
-        public ValveResponse execute(Message message);
+        ValveResponse execute(Message message);
     }
 
-
+    /**
+     * Checks to see if the valve message is to start the game
+     */
     private class DoPlayGameValve implements Valve {
         @Override
         public ValveResponse execute(Message message) {
@@ -69,6 +70,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Checks to see if the valve message is to return to the menu
+     */
     private class DoReturnToMenuValve implements  Valve{
         @Override
         public ValveResponse execute(Message message){
@@ -83,6 +87,9 @@ public class Controller {
 
     }
 
+    /**
+     * Checks to see if the valve message has detected the Snake colliding
+     */
     private class DoHitValve implements Valve {
         @Override
         public ValveResponse execute(Message message) {

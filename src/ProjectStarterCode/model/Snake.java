@@ -91,16 +91,6 @@ public class Snake {
     }
 
     /**
-     * Prints the snake
-     */
-    public void printSnake() {
-        for (Tile snakePiece : location) {
-            System.out.print(snakePiece);
-        }
-        System.out.println(getSize());
-    }
-
-    /**
      * Updates the size of the snake
      */
     public void updateSize() {

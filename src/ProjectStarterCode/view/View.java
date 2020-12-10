@@ -13,17 +13,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.BlockingQueue;
 
+
 public class View {
     private JFrame mainFrame;
     private BlockingQueue<Message> queue;
     private Model model;
     JLabel[][] grid;
 
+    /**
+     *
+     * @param queue passages messages between the view and controller
+     * @param model contains the program logic
+     * @return connects the view with the queue and model
+     */
     public static View init(BlockingQueue<Message> queue, Model model) {
         // Create object of type view
         return new View(queue, model);
     }
 
+    /**
+     *
+     * @param queue passages messages between the view and controller
+     * @param model contains the program logic
+     */
     private View(BlockingQueue<Message> queue, Model model) {
         this.queue = queue;
         this.model = model;
@@ -36,6 +48,9 @@ public class View {
         GameViews();
     }
 
+    /**
+     * Method to draw all the visual aspects of the game
+     */
     public void GameViews() {
         mainFrame = new JFrame("Snake");
 
@@ -473,8 +488,8 @@ public class View {
     }
 
     /**
+     * Method to checks the board provided and updates the displayed grid accordingly
      * @param fullGrid the tiles to be updated
-     *                 checks the board provided and updates the displayed grid accordingly
      */
     public void updateGrid(Tile[][] fullGrid) {
         for (int i = 0; i < fullGrid.length; i++) {
@@ -489,7 +504,6 @@ public class View {
             }
         }
     }
-
 
     public void change() {
         // TODO: do all the updates and repaint
