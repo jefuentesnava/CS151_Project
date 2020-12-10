@@ -56,7 +56,6 @@ public class View {
 
         //Components used in more than one Child Panel
 
-
         //Menu Panel Components
         JPanel logoPanel = new JPanel();
         JPanel playButtonPanel = new JPanel();
@@ -70,10 +69,10 @@ public class View {
         //Game Panel Components
         JPanel snakeLenPanel = new JPanel();
         JPanel fieldPanel = new JPanel();
+        JPanel directionPanel = new JPanel();
         JPanel left = new JPanel();
         JPanel right = new JPanel();
-        JPanel bot = new JPanel();
-        JLabel snakeLen = new JLabel(" Snake Length: ");
+        JLabel snakeLen = new JLabel(" Snake Length: " + model.snake.getSize());
 
         //Death Panel Components
         JPanel top = new JPanel();
@@ -109,6 +108,7 @@ public class View {
 
         /*Game layouts**/
         gamePanel.setLayout(new BorderLayout());
+        directionPanel.setLayout(new GridLayout(3, 3));
         fieldPanel.setLayout(new GridLayout(row, col, 3, 3));  //create a gridlayout 9x9 with vertical and horizontal gaps of 3
         fieldPanel.setBackground(Color.WHITE);  //set color of background to white to increase contrast
 
@@ -180,20 +180,51 @@ public class View {
         snakeLenPanel.setBackground(Color.BLACK);
 
         //remaining panel properties
-        bot.setBackground(Color.BLACK);
+        directionPanel.setBackground(Color.BLACK);
         right.setBackground(Color.BLACK);
         left.setBackground(Color.BLACK);
+
+        //directionPanel buttons
+        JButton upButton = new JButton("Up");
+        upButton.setForeground(Color.GREEN);
+        upButton.setBackground(Color.BLACK);
+        upButton.setFont(upButton.getFont().deriveFont(50.0f));
+        upButton.setBorder(new LineBorder(Color.WHITE, 5));
+        JButton leftButton = new JButton("Left");
+        leftButton.setForeground(Color.GREEN);
+        leftButton.setBackground(Color.BLACK);
+        leftButton.setFont(leftButton.getFont().deriveFont(50.0f));
+        leftButton.setBorder(new LineBorder(Color.WHITE, 5));
+        JButton rightButton = new JButton("Right");
+        rightButton.setForeground(Color.GREEN);
+        rightButton.setBackground(Color.BLACK);
+        rightButton.setFont(rightButton.getFont().deriveFont(50.0f));
+        rightButton.setBorder(new LineBorder(Color.WHITE, 5));
+        JButton downButton = new JButton("Down");
+        downButton.setForeground(Color.GREEN);
+        downButton.setBackground(Color.BLACK);
+        downButton.setFont(downButton.getFont().deriveFont(50.0f));
+        downButton.setBorder(new LineBorder(Color.WHITE, 5));
+        directionPanel.add(new JLabel());
+        directionPanel.add(upButton);
+        directionPanel.add(new JLabel());
+        directionPanel.add(leftButton);
+        directionPanel.add(new JLabel());
+        directionPanel.add(rightButton);
+        directionPanel.add(new JLabel());
+        directionPanel.add(downButton);
+        directionPanel.add(new JLabel());
 
         //add everything to gamePanel and initialize
         gamePanel.add(snakeLenPanel, BorderLayout.NORTH);
         snakeLenPanel.setPreferredSize(new Dimension(1000, 50));
         gamePanel.add(fieldPanel, BorderLayout.CENTER);
-        gamePanel.add(bot, BorderLayout.SOUTH);
-        bot.setPreferredSize(new Dimension(1000, 50));
+        gamePanel.add(directionPanel, BorderLayout.SOUTH);
+        directionPanel.setPreferredSize(new Dimension(1000, 450));
         gamePanel.add(right, BorderLayout.EAST);
-        right.setPreferredSize(new Dimension(50, 1000));
+        right.setPreferredSize(new Dimension(150, 1000));
         gamePanel.add(left, BorderLayout.WEST);
-        left.setPreferredSize(new Dimension(50, 1000));
+        left.setPreferredSize(new Dimension(150, 1000));
         gamePanel.setVisible(true);
 
         /*Death Panel Logic********/
@@ -303,7 +334,6 @@ public class View {
         mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainFrame.pack();
         mainFrame.setVisible(true);
-
         /*
         ----------------------------------------------------------------------------------------------------------------------------------------------------------------
              Action listeners
@@ -313,6 +343,7 @@ public class View {
         Timer timer = new Timer(500, event -> {
             if (model.snake.isAlive()) {
                 model.updateModel();
+                snakeLen.setText(" Snake Length: " + model.snake.getSize());
             }
         });
 
@@ -407,12 +438,44 @@ public class View {
                 }
             }
         });
+
+        /** Action listerner for UpButton*/
+        upButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.snake.goUp();
+            }
+        });
+
+        /** Action listener for LeftButton*/
+        leftButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.snake.goLeft();
+            }
+        });
+
+        /** Action listener for RightButton*/
+        rightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.snake.goRight();
+            }
+        });
+
+        /** Action listener for Down Button*/
+        downButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.snake.goDown();
+            }
+        });
     }
 
     /**
-    * @param fullGrid the tiles to be updated
-    * checks the board provided and updates the displayed grid accordingly
-    */
+     * @param fullGrid the tiles to be updated
+     *                 checks the board provided and updates the displayed grid accordingly
+     */
     public void updateGrid(Tile[][] fullGrid) {
         for (int i = 0; i < fullGrid.length; i++) {
             for (int j = 0; j < fullGrid[0].length; j++) {
